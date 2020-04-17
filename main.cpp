@@ -3,6 +3,8 @@
 #include <Eigen/Dense>
 #include <iostream>  
 
+#include "base.h"
+
 using namespace std; 
 
 void write_data() {
@@ -52,16 +54,16 @@ int main()
 
 	HDF5::File hf = HDF5::File("../data/iris.h5", HDF5::File::ReadOnly);
 
-    Eigen::MatrixXd X;
+    Eigen::ArrayXXd X;
     Eigen::VectorXd y;
 
 
-    hf.read("X", X);
+    // hf.read("X", X);
     hf.read("y", y);
     
     std::cout << "Matrix read: " << std::endl;
-    std::cout << X << std::endl;
-    std::cout << y << std::endl;
+    // std::cout << X << std::endl;
+    std::cout <<  y.array().size() << std::endl;
 
 	return 0; 
 } 
