@@ -6,3 +6,5 @@ Summer Project to freshen up on my C++ skills. Seeking to implement various skle
 
 ## Resources
   * [C++ Tutorials](https://github.com/mhask94/cpp_tutorials). I've been following these to get used to cmake and eigen. Made by Matt Haskell here at BYU.
+  
+Note to get fdcl-hdf5 to find the hdf5 libraries, I add to run `export CPATH=/usr/include/hdf5/serial/` or add it to my bashrc.
