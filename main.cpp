@@ -3,35 +3,9 @@
 #include <Eigen/Dense>
 #include <iostream>  
 
-#include "base.h"
+#include "KNeighborsClassifier.h"
 
 using namespace std; 
-
-void write_data() {
-    Eigen::MatrixXd matrix(3, 3);
-    matrix << 1, 2, 3, 4, 5, 6, 7, 8, 11;
-
-    // open the file 
-    HDF5::File hf = HDF5::File("filename.hdf5", HDF5::File::Truncate);
-
-    // write the data
-    hf.write("dataset_name", matrix);
-    
-    std::cout << "Original Matrix: " << std::endl;
-    std::cout << matrix << std::endl;
-}
-
-void read_data() {
-    // open the file for reading
-    HDF5::File hf = HDF5::File("filename.hdf5", HDF5::File::ReadOnly);
-
-    Eigen::MatrixXd matrix;
-
-    hf.read("dataset_name", matrix);
-    
-    std::cout << "Matrix read: " << std::endl;
-    std::cout << matrix << std::endl;
-}
 
 // main function - 
 // where the execution of program begins 
@@ -54,16 +28,19 @@ int main()
 
 	HDF5::File hf = HDF5::File("../data/iris.h5", HDF5::File::ReadOnly);
 
-    Eigen::ArrayXXd X;
+    Eigen::MatrixXd X;
     Eigen::VectorXd y;
+    Eigen::VectorXd y_predict;
 
 
-    // hf.read("X", X);
+    hf.read("X", X);
     hf.read("y", y);
     
-    std::cout << "Matrix read: " << std::endl;
-    // std::cout << X << std::endl;
-    std::cout <<  y.array().size() << std::endl;
+    KNeighborsClassifier knn(10);
+
+    knn.fit(X, y);
+    y[10] = 10;
+    cout << knn.score(X, y);
 
 	return 0; 
 } 

@@ -12,5 +12,8 @@ include_directories(
 
 add_executable(${PROJECT_NAME}
     main.cpp
+    base.h
+    KNeighborsClassifier.h
+    KNeighborsClassifier.cpp
     )
 target_link_libraries(${PROJECT_NAME} fdcl_hdf5)

@@ -6,6 +6,7 @@
 class BaseEstimator{
     public:
         BaseEstimator(void) {}
+        ~BaseEstimator(void){}
 
         virtual void fit(const Eigen::ArrayXXd& X, const Eigen::ArrayXd& y) = 0;
         virtual Eigen::ArrayXd& predict(const Eigen::ArrayXXd& X) = 0;
@@ -27,7 +28,7 @@ class ClassifierMixin : public BaseEstimator{
         float score(const Eigen::ArrayXXd& X, const Eigen::ArrayXd& y){
 
             Eigen::ArrayXd& prediction = predict(X);
-            return (y==0).sum() / y.size();
+            return (float)(y==prediction).count()/ (float)y.size();
         }
 };
 
