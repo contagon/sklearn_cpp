@@ -4,44 +4,33 @@
 #include <iostream>  
 
 #include "KNeighborsClassifier.h"
-
-
-#include <map>
+#include "model_selection.cpp"
 
 using namespace Eigen;
 using namespace std; 
 
 
-// ArrayXd n_argmax(ArrayXd& array, const int& N){
-//     // make array of indices
-//     ArrayXd indices = ArrayXd::LinSpaced(array.size(),0,array.size()-1);
-
-//     //partial_sort indice array
-//     std::partial_sort(indices.data(), indices.data()+N, indices.data()+indices.size(),
-//                      [&array](int i,int j) {return array[i]<array[j];});
-
-//     return indices.head(N);
-// }
-
 int main() 
 { 
 
-	HDF5::File hf = HDF5::File("../data/iris.h5", HDF5::File::ReadOnly);
-
+	HDF5::File hf = HDF5::File("../data/digits.h5", HDF5::File::ReadOnly);
     Eigen::MatrixXd X;
     Eigen::VectorXd y;
     Eigen::VectorXd y_predict;
-
-
     hf.read("X", X);
     hf.read("y", y);
+
+    auto data = test_train_split(X, y, 0.3333);
+    
     for(int i=1; i<=15; i+=2){
-        KNeighborsClassifier knn(i, "distance");
+        KNeighborsClassifier knn(i, "uniform");
         // cout  << "Fitting... \n";
-        knn.fit(X, y);
+        knn.fit(data.X_train, data.y_train);
         // cout << "Scoring... \n";
-        cout << i << ": " << knn.score(X, y) << "\n";
+        cout << i << ": " << knn.score(data.X_test, data.y_test) << "\n";
     }
+
+    
 
 	return 0; 
 } 
