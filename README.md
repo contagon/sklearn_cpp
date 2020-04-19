@@ -1,5 +1,8 @@
 Summer Project to freshen up on my C++ skills. Seeking to implement various sklearn algorithms in C++.
 
+## Implemented Algorithms
+  * kNeighborsClassifier
+
 ## Dependencies
   * [Eigen](https://eigen.tuxfamily.org/dox/group__TutorialMatrixArithmetic.html): C++ Numpy Equivalent. [Installation](https://eigen.tuxfamily.org/dox/GettingStarted.html) (or available via apt)
   * [fdcl-hdf5](https://github.com/skulumani/fdcl-hdf5): Used to save eigen data to HD5 files. [Installation](https://shankarkulumani.com/2018/09/hdf5.html).
