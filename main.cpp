@@ -2,9 +2,11 @@
 #include "hdf5.hpp"
 #include <Eigen/Dense>
 #include <iostream>  
-#include <numeric>
 
 #include "KNeighborsClassifier.h"
+
+
+#include <map>
 
 using namespace Eigen;
 using namespace std; 
@@ -24,7 +26,7 @@ using namespace std;
 int main() 
 { 
 
-	HDF5::File hf = HDF5::File("../data/digits.h5", HDF5::File::ReadOnly);
+	HDF5::File hf = HDF5::File("../data/iris.h5", HDF5::File::ReadOnly);
 
     Eigen::MatrixXd X;
     Eigen::VectorXd y;
@@ -34,12 +36,12 @@ int main()
     hf.read("X", X);
     hf.read("y", y);
     for(int i=1; i<=15; i+=2){
-        KNeighborsClassifier knn(i);
+        KNeighborsClassifier knn(i, "distance");
         // cout  << "Fitting... \n";
         knn.fit(X, y);
         // cout << "Scoring... \n";
         cout << i << ": " << knn.score(X, y) << "\n";
     }
-    
+
 	return 0; 
 } 

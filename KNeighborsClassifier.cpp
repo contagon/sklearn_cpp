@@ -1,8 +1,8 @@
 #include "KNeighborsClassifier.h"
 
-ArrayXd n_argmax(ArrayXd& array, const int& N){
+ArrayXi n_argmax(ArrayXd& array, const int& N){
     // make array of indices
-    ArrayXd indices = ArrayXd::LinSpaced(array.size(),0,array.size()-1);
+    ArrayXi indices = ArrayXi::LinSpaced(array.size(),0,array.size()-1);
 
     //partial_sort indice array
     std::partial_sort(indices.data(), indices.data()+N, indices.data()+indices.size(),
@@ -12,7 +12,8 @@ ArrayXd n_argmax(ArrayXd& array, const int& N){
 }
 
 // Default Constructor
-KNeighborsClassifier::KNeighborsClassifier(int n_neighbors) : n_neighbors(n_neighbors) {}
+KNeighborsClassifier::KNeighborsClassifier(int n_neighbors, string weights) 
+                : n_neighbors(n_neighbors), weights(weights) {}
 
 void KNeighborsClassifier::fit(const Eigen::ArrayXXd& X, const Eigen::ArrayXd& y){
     this->X_ = X;
@@ -26,16 +27,19 @@ Eigen::ArrayXd KNeighborsClassifier::predict(const Eigen::ArrayXXd& X){
         // Get distance for point from all other points
         ArrayXd distance = (X_.rowwise() - x).rowwise().squaredNorm();
 
-        // Get closests N items
-        ArrayXd idx = n_argmax(distance, n_neighbors);
-        ArrayXd labels = y_(idx);
+        // Get closests N indices
+        ArrayXi idxs = n_argmax(distance, n_neighbors);
 
-        // Get most common label
+        // Give weights to each label
         map<double, int> counter;
-        for(auto label: labels)
+        for(auto idx: idxs)
         {
-            ++counter[label];
+            if(weights == "uniform")
+                counter[y_(idx)] += 1;
+            else if(weights == "distance")
+                counter[y_(idx)] += 1 / distance(idx);
         }
+        // Get most largest weighted label
         prediction(i) = (*max_element(counter.begin(), counter.end(),
             [](const pair<double, int>& p1, const pair<double, int>& p2) {
                 return p1.second < p2.second; })).first;

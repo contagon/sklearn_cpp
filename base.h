@@ -2,7 +2,6 @@
 #define BASE_INTERFACES
 
 #include <Eigen/Dense>
-#include <map>
 
 using namespace Eigen;
 using namespace std;
