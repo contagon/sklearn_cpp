@@ -16,11 +16,17 @@ KNeighborsClassifier::KNeighborsClassifier(int n_neighbors, string weights)
                 : n_neighbors(n_neighbors), weights(weights) {}
 
 void KNeighborsClassifier::fit(const Eigen::ArrayXXd& X, const Eigen::ArrayXd& y){
+    check_X_y(X, y);
     this->X_ = X;
     this->y_ = y;
+    fitted_ = true;
 } 
 
 Eigen::ArrayXd KNeighborsClassifier::predict(const Eigen::ArrayXXd& X){
+    // Check to make sure everything is in order
+    check_is_fitted();
+    check_X(X);
+
     ArrayXd prediction(X.rows()); 
     int i = 0;
     for(auto x: X.rowwise()){
