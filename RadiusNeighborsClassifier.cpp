@@ -1,28 +1,17 @@
-#include "KNeighborsClassifier.h"
-
-ArrayXi n_argmax(ArrayXd& array, const int& N){
-    // make array of indices
-    ArrayXi indices = ArrayXi::LinSpaced(array.size(),0,array.size()-1);
-
-    //partial_sort indice array
-    std::partial_sort(indices.data(), indices.data()+N, indices.data()+indices.size(),
-                     [&array](int i,int j) {return array[i]<array[j];});
-
-    return indices.head(N);
-}
+#include "RadiusNeighborsClassifier.h"
 
 // Default Constructor
-KNeighborsClassifier::KNeighborsClassifier(int n_neighbors, string weights) 
-                : n_neighbors(n_neighbors), weights(weights) {}
+RadiusNeighborsClassifier::RadiusNeighborsClassifier(float radius, string weights) 
+                : radius(radius), weights(weights) {}
 
-void KNeighborsClassifier::fit(const ArrayXXd& X, const ArrayXd& y){
+void RadiusNeighborsClassifier::fit(const ArrayXXd& X, const ArrayXd& y){
     check_X_y(X, y);
     this->X_ = X;
     this->y_ = y;
     fitted_ = true;
 } 
 
-ArrayXd KNeighborsClassifier::predict(const ArrayXXd& X){
+ArrayXd RadiusNeighborsClassifier::predict(const ArrayXXd& X){
     // Check to make sure everything is in order
     check_is_fitted();
     check_X(X);
@@ -33,9 +22,19 @@ ArrayXd KNeighborsClassifier::predict(const ArrayXXd& X){
         // Get distance for point from all other points
         ArrayXd distance = (X_.rowwise() - x).rowwise().squaredNorm();
 
-        // Get closests N indices
-        ArrayXi idxs = n_argmax(distance, n_neighbors);
-
+        // Get all idxs under radius
+        Array<bool, Dynamic, 1> mask = distance < radius;
+        ArrayXi idxs = ArrayXi::Zero(mask.count());
+        // Extract idxs from mask
+        int j = 0;
+        int k = 0;
+        for(auto m : mask){
+            if(m){
+                idxs(j) = k;
+                j++;
+            }
+            k++;
+        }
         // Give weights to each label
         map<double, int> counter;
         for(auto idx: idxs)

@@ -4,6 +4,7 @@
 #include <iostream>  
 
 #include "KNeighborsClassifier.h"
+#include "RadiusNeighborsClassifier.h"
 #include "model_selection.cpp"
 
 using namespace Eigen;
@@ -22,15 +23,13 @@ int main()
 
     auto data = test_train_split(X, y, 0.3333);
     
-    for(int i=1; i<=15; i+=2){
-        KNeighborsClassifier knn(i, "uniform");
+    for(int i=10; i<=25; i+=2){
+        RadiusNeighborsClassifier knn(float(i)/10, "uniform");
         // cout  << "Fitting... \n";
         knn.fit(data.X_train, data.y_train);
         // cout << "Scoring... \n";
-        cout << i << ": " << knn.score(data.X_test, data.y_test) << "\n";
+        cout << float(i)/10 << ": " << knn.score(data.X_test, data.y_test) << "\n";
     }
-
-    
-
+   
 	return 0; 
 } 

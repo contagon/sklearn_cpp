@@ -1,5 +1,5 @@
-#ifndef KNN_CLASSIFIER
-#define KNN_CLASSIFIER
+#ifndef RN_CLASSIFIER
+#define RN_CLASSIFIER
 
 #include <Eigen/Dense>
 #include "base.h"
@@ -7,15 +7,15 @@
 
 using namespace Eigen;
 
-class KNeighborsClassifier: public ClassifierMixin{
+class RadiusNeighborsClassifier: public ClassifierMixin{
     public:
-        int n_neighbors;
+        float radius;
         string weights;
         ArrayXXd X_;
         ArrayXd y_;
     
-        KNeighborsClassifier(int n_neighbors=5, string weights="uniform");
-        ~KNeighborsClassifier() {}
+        RadiusNeighborsClassifier(float radius=1, string weights="uniform");
+        ~RadiusNeighborsClassifier() {}
 
         void fit(const ArrayXXd& X, const ArrayXd& y);
         ArrayXd predict(const ArrayXXd& X);
