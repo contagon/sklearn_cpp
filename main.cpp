@@ -5,6 +5,7 @@
 
 #include "KNeighborsClassifier.h"
 #include "RadiusNeighborsClassifier.h"
+#include "PCA.h"
 #include "model_selection.cpp"
 
 using namespace Eigen;
@@ -14,22 +15,29 @@ using namespace std;
 int main() 
 { 
 
-	HDF5::File hf = HDF5::File("../data/digits.h5", HDF5::File::ReadOnly);
+	HDF5::File hf = HDF5::File("../data/iris.h5", HDF5::File::ReadOnly);
     Eigen::MatrixXd X;
     Eigen::VectorXd y;
     Eigen::VectorXd y_predict;
     hf.read("X", X);
     hf.read("y", y);
 
-    auto data = test_train_split(X, y, 0.3333);
-    
-    for(int i=10; i<=25; i+=2){
-        RadiusNeighborsClassifier knn(float(i)/10, "uniform");
-        // cout  << "Fitting... \n";
-        knn.fit(data.X_train, data.y_train);
-        // cout << "Scoring... \n";
-        cout << float(i)/10 << ": " << knn.score(data.X_test, data.y_test) << "\n";
-    }
-   
+    auto data = test_train_split(X, y, 0.3333, false);
+    PCA pca(2);
+    auto Xpca = pca.fit_transform(data.X_train);
+    cout << Xpca << endl;
+    cout << pca.explained_variance_ << endl;
+    cout << pca.explained_variance_ratio_ << endl;
+
+    // cout << Xpca_train;
+    // for(int i=1; i<=25; i+=2){
+    //     RadiusNeighborsClassifier knn(float(i)/10, "distance");
+    //     // cout  << "Fitting... \n";
+    //     knn.fit(data.X_train, data.y_train);
+    //     // cout << "Scoring... \n";
+    //     cout << float(i)/10 << ": " << knn.score(data.X_test, data.y_test) << "\n";
+    // }
+
+
 	return 0; 
 } 

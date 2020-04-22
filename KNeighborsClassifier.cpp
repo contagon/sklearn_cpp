@@ -19,7 +19,6 @@ void KNeighborsClassifier::fit(const ArrayXXd& X, const ArrayXd& y){
     check_X_y(X, y);
     this->X_ = X;
     this->y_ = y;
-    fitted_ = true;
 } 
 
 ArrayXd KNeighborsClassifier::predict(const ArrayXXd& X){

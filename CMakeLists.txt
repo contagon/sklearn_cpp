@@ -17,5 +17,7 @@ add_executable(${PROJECT_NAME}
     KNeighborsClassifier.cpp
     RadiusNeighborsClassifier.h
     RadiusNeighborsClassifier.cpp
+    PCA.h
+    PCA.cpp
     )
 target_link_libraries(${PROJECT_NAME} fdcl_hdf5)
