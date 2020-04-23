@@ -6,7 +6,7 @@
 #include "KNeighborsClassifier.h"
 #include "RadiusNeighborsClassifier.h"
 #include "PCA.h"
-#include "model_selection.cpp"
+#include "model_selection.h"
 
 using namespace Eigen;
 using namespace std; 
