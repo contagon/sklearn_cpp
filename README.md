@@ -1,8 +1,10 @@
 Summer Project to freshen up on my C++ skills. Seeking to implement various sklearn algorithms in C++.
 
 ## Implemented Algorithms
-  * kNeighborsClassifier
-  * RadiusNeighborsClassifier
+| Transformers | Classifiers | Regressors | Misc|
+|:----:|:----:|:----:|:----:|
+| PCA |kNeighborsClassifier|  | Test-Train Split |
+|     |RadiusNeighborsClassifier| | |
 
 ## Dependencies
   * [Eigen](https://eigen.tuxfamily.org/dox/group__TutorialMatrixArithmetic.html): C++ Numpy Equivalent. [Installation](https://eigen.tuxfamily.org/dox/GettingStarted.html) (or available via apt)

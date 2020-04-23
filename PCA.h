@@ -19,8 +19,8 @@ class PCA: public TransformerMixin{
         PCA(int n_components, bool center=true);
         ~PCA() {}
 
-        void fit(ArrayXXd& X);
-        ArrayXXd transform(ArrayXXd& X);
+        void fit(ArrayXXd X);
+        void transform_inplace(ArrayXXd& X);
 };
 
 #endif

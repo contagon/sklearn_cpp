@@ -64,12 +64,21 @@ class ClassifierMixin : public BaseEstimator{
 
 class TransformerMixin : public BaseEstimator{
     public:
-        virtual void fit(ArrayXXd& X) = 0;
-        virtual ArrayXXd transform(ArrayXXd& X) = 0;
+        virtual void fit(ArrayXXd X) = 0;
+        virtual void transform_inplace(ArrayXXd& X) = 0;
 
-        ArrayXXd fit_transform(ArrayXXd& X){
+        // This will return a copy from the transform_inplace function
+        ArrayXXd transform(ArrayXXd X){
+            transform_inplace(X);
+            return X;
+        }
+        ArrayXXd fit_transform(ArrayXXd X){
             fit(X);
             return transform(X);
+        }
+        void fit_transform_inplace(ArrayXXd& X){
+            fit(X);
+            transform_inplace(X);
         }
 };
 

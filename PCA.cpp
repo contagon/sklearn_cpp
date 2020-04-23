@@ -5,7 +5,7 @@
 PCA::PCA(int n_components, bool center) 
                 : n_components(n_components), center(center) {}
 
-void PCA::fit(ArrayXXd& X){
+void PCA::fit(ArrayXXd X){
     // Make sure everything is in order
     check_X_y(X);
     if(n_components > n_features_)
@@ -19,12 +19,12 @@ void PCA::fit(ArrayXXd& X){
 
     // Compute SVD and split as needed
     BDCSVD<MatrixXd> svd(X, ComputeThinU | ComputeThinV);
-    V_ = svd.matrixV().transpose()(all, seq(0, n_components-1));
-    explained_variance_ = svd.singularValues();
+    V_ = svd.matrixV()(all, seq(0, n_components-1));
+    explained_variance_ = svd.singularValues().array().square() / (X.rows()-1);
     explained_variance_ratio_ = explained_variance_ / explained_variance_.sum();
 } 
 
-ArrayXXd PCA::transform(ArrayXXd& X){
+void PCA::transform_inplace(ArrayXXd& X){
     // Check to make sure everything is in order
     check_is_fitted();
     check_X(X);
@@ -33,5 +33,6 @@ ArrayXXd PCA::transform(ArrayXXd& X){
     if(center)
         X.rowwise() -= mean_.transpose();
     
-    return (X.matrix()*V_.matrix()).array();
+    // Perform operation
+    X = (X.matrix().eval()*V_.matrix()).array();
 }

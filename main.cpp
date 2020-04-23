@@ -22,22 +22,20 @@ int main()
     hf.read("X", X);
     hf.read("y", y);
 
+
+    ArrayXXd Xc1 = X;
+    PCA pca1(2);
+    ArrayXXd Xpca = pca1.fit_transform(X);
+    cout << Xpca.row(1) << endl;
+
     auto data = test_train_split(X, y, 0.3333, false);
-    PCA pca(2);
-    auto Xpca = pca.fit_transform(data.X_train);
-    cout << Xpca << endl;
-    cout << pca.explained_variance_ << endl;
-    cout << pca.explained_variance_ratio_ << endl;
-
-    // cout << Xpca_train;
-    // for(int i=1; i<=25; i+=2){
-    //     RadiusNeighborsClassifier knn(float(i)/10, "distance");
-    //     // cout  << "Fitting... \n";
-    //     knn.fit(data.X_train, data.y_train);
-    //     // cout << "Scoring... \n";
-    //     cout << float(i)/10 << ": " << knn.score(data.X_test, data.y_test) << "\n";
-    // }
-
+    for(int i=1; i<=25; i+=2){
+        RadiusNeighborsClassifier knn(float(i)/10, "distance");
+        // cout  << "Fitting... \n";
+        knn.fit(data.X_train, data.y_train);
+        // cout << "Scoring... \n";
+        cout << float(i)/10 << ": " << knn.score(data.X_test, data.y_test) << "\n";
+    }
 
 	return 0; 
 } 
