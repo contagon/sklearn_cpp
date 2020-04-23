@@ -29,3 +29,15 @@ void StandardScaler::transform_inplace(ArrayXXd& X){
     if(with_std)
         X.rowwise() /= scale_.transpose();
 }
+
+void StandardScaler::inverse_transform_inplace(ArrayXXd& X){
+    // Check to make sure everything is in order
+    check_is_fitted();
+    check_X(X);
+
+    if(with_std)
+        X.rowwise() *= scale_.transpose();
+
+    if(with_mean)
+        X.rowwise() += mean_.transpose();
+}

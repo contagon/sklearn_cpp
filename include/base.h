@@ -66,12 +66,19 @@ class TransformerMixin : public BaseEstimator{
     public:
         virtual void fit(ArrayXXd X) = 0;
         virtual void transform_inplace(ArrayXXd& X) = 0;
+        virtual void inverse_transform_inplace(ArrayXXd& X) = 0;
 
         // This will return a copy from the transform_inplace function
         ArrayXXd transform(ArrayXXd X){
             transform_inplace(X);
             return X;
         }
+        ArrayXXd inverse_transform(ArrayXXd X){
+            inverse_transform_inplace(X);
+            return X;
+        }
+
+        // For faster transforming
         ArrayXXd fit_transform(ArrayXXd X){
             fit(X);
             return transform(X);

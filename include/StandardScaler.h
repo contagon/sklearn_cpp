@@ -20,6 +20,7 @@ class StandardScaler: public TransformerMixin{
 
         void fit(ArrayXXd X);
         void transform_inplace(ArrayXXd& X);
+        void inverse_transform_inplace(ArrayXXd& X);
 };
 
 #endif

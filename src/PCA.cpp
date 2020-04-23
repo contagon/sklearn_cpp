@@ -33,5 +33,17 @@ void PCA::transform_inplace(ArrayXXd& X){
         X.rowwise() -= mean_.transpose();
     
     // Perform operation
-    X = (X.matrix().eval()*V_.matrix()).array();
+    X.matrix() *= V_.matrix();
+}
+
+void PCA::inverse_transform_inplace(ArrayXXd& X){
+    // Check to make sure everything is in order
+    check_is_fitted();
+
+    // Perform operation
+    X.matrix() *= V_.transpose().matrix();
+
+    //Center it first if requested
+    if(center)
+        X.rowwise() += mean_.transpose();
 }

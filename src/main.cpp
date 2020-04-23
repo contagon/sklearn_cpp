@@ -5,8 +5,11 @@
 
 #include "KNeighborsClassifier.h"
 #include "RadiusNeighborsClassifier.h"
+
 #include "PCA.h"
 #include "StandardScaler.h"
+#include "MinMaxScaler.h"
+
 #include "model_selection.h"
 
 using namespace Eigen;
@@ -23,11 +26,18 @@ int main()
     hf.read("X", X);
     hf.read("y", y);
 
-    cout << X.colwise().mean() << endl;
-    StandardScaler trans(true, true);
-    ArrayXXd Xt = trans.fit_transform(X);
-    cout << trans.var_ << endl;
-
+    ArrayXXd Xc = X;
+    cout << Xc.row(1) << endl;
+    cout << Xc.colwise().mean() << endl << endl;
+    PCA trans(2);
+    trans.fit_transform_inplace(Xc);
+    cout << Xc.row(1) << endl;
+    cout << Xc.colwise().mean() << endl;
+    trans.inverse_transform_inplace(Xc);
+    cout << Xc.row(1) << endl;
+    cout << Xc.colwise().mean() << endl;
+    cout << trans.V_.transpose().matrix() * trans.V_.matrix() << endl;
+    
     // auto data = test_train_split(X, y, 0.3333, false);
     // for(int i=1; i<=25; i+=2){
     //     RadiusNeighborsClassifier knn(float(i)/10, "distance");

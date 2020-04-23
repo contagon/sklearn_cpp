@@ -5,6 +5,7 @@ Summer Project to freshen up on my C++ skills. Seeking to implement various skle
 |:----:|:----:|:----:|:----:|
 | PCA |kNeighborsClassifier|  | Test-Train Split |
 | StandardScaler |RadiusNeighborsClassifier| | |
+| MinMaxScaler | | | |
 
 ## Dependencies
   * [Eigen](https://eigen.tuxfamily.org/dox/group__TutorialMatrixArithmetic.html): C++ Numpy Equivalent. [Installation](https://eigen.tuxfamily.org/dox/GettingStarted.html) (or available via apt)
