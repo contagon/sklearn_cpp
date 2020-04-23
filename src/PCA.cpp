@@ -1,5 +1,4 @@
 #include "PCA.h"
-#include <iostream>
 
 // Default Constructor
 PCA::PCA(int n_components, bool center) 
