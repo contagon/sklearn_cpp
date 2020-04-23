@@ -5,21 +5,17 @@ find_package(Eigen3 REQUIRED)
 find_package(FDCL_HDF5 REQUIRED)
 #add_subdirectory(lib/<lib_dir_name>)
 
+# Get all header files in 
 include_directories(
     include
     ${EIGEN3_INCLUDE_DIRS}
     )
 
+# Get all cpp files
+file(GLOB SOURCES "src/*.cpp")
+
 add_executable(${PROJECT_NAME}
-    main.cpp
-    base.h
-    KNeighborsClassifier.h
-    KNeighborsClassifier.cpp
-    RadiusNeighborsClassifier.h
-    RadiusNeighborsClassifier.cpp
-    PCA.h
-    PCA.cpp
-    model_selection.h
-    model_selection.cpp
+    ${SOURCES}
     )
+
 target_link_libraries(${PROJECT_NAME} fdcl_hdf5)
