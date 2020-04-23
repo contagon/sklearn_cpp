@@ -6,10 +6,10 @@
 
 using namespace Eigen;
 
-class Template: public TransformerMixin{
+class Transfomer: public TransformerMixin{
     public:
-        Template();
-        ~Template() {}
+        Transfomer();
+        ~Transfomer() {}
 
         void fit(ArrayXXd X);
         void transform_inplace(ArrayXXd& X);
