@@ -36,7 +36,7 @@ class BaseEstimator{
         virtual ~BaseEstimator(void){}
 };
 
-class EstimatorMixin : public BaseEstimator{
+class EstimatorMixin : public virtual BaseEstimator{
     public:
         virtual void fit(const ArrayXXd& X, const ArrayXd& y) = 0;
         virtual ArrayXd predict(const ArrayXXd& X) = 0;
@@ -65,7 +65,7 @@ class ClassifierMixin : public EstimatorMixin{
         }
 };
 
-class TransformerMixin : public BaseEstimator{
+class TransformerMixin : public virtual BaseEstimator{
     public:
         virtual void fit(ArrayXXd X) = 0;
         virtual void transform_inplace(ArrayXXd& X) = 0;

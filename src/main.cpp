@@ -22,26 +22,27 @@ using namespace std;
 int main() 
 { 
     // Read data
-	HDF5::File hf = HDF5::File("../data/iris.h5", HDF5::File::ReadOnly);
+	HDF5::File hf = HDF5::File("../data/digits.h5", HDF5::File::ReadOnly);
     Eigen::MatrixXd X;
     Eigen::VectorXd y;
     Eigen::VectorXd y_predict;
     hf.read("X", X);
     hf.read("y", y);
 
-    // Pipeline pipe({new PCA(2), new KNeighborsClassifier(5)});
-    // pipe.fit(X, y);
-    // cout << pipe.score(X, y) << endl;
+    // Pipeline pipe2({new KNeighborsClassifier(5) });
+    KNeighborsClassifier pipe2(5);
+    pipe2.fit(X, y);
+    cout << pipe2.score(X, y) << endl;
 
     // """ Transformer Testing """
-    ArrayXXd Xc = X;
-    Pipeline trans({new StandardScaler, new PCA(4)});
-    trans.fit(X);
-    cout << Xc.row(1) << endl;
-    trans.transform_inplace(Xc);
-    cout << Xc.row(1) << endl;
-    trans.inverse_transform_inplace(Xc);
-    cout << Xc.row(1) << endl;
+    // ArrayXXd Xc = X;
+    // Pipeline trans({new StandardScaler, new PCA(4)});
+    // trans.fit(X);
+    // cout << Xc.row(1) << endl;
+    // trans.transform_inplace(Xc);
+    // cout << Xc.row(1) << endl;
+    // trans.inverse_transform_inplace(Xc);
+    // cout << Xc.row(1) << endl;
     
     // """ Estimator Testing """
     // auto data = test_train_split(X, y, 0.3333, false);

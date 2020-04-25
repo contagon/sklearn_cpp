@@ -7,7 +7,7 @@
 
 using namespace Eigen;
 
-class Pipeline: public BaseEstimator{
+class Pipeline: public EstimatorMixin, public TransformerMixin{
     public:
         vector<BaseEstimator*> estimators;
 
@@ -15,9 +15,9 @@ class Pipeline: public BaseEstimator{
         ~Pipeline();
 
         // Methods if we end with an Estimator
-        void fit(ArrayXXd X, const ArrayXd& y);
-        ArrayXd predict(ArrayXXd X);
-        float score(ArrayXXd X, const ArrayXd& y);
+        void fit(const ArrayXXd& X, const ArrayXd& y);
+        ArrayXd predict(const ArrayXXd& X);
+        float score(const ArrayXXd& X, const ArrayXd& y);
 
         // Methods if they're all transformers
         void fit(ArrayXXd X);
