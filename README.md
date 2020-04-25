@@ -18,4 +18,4 @@ Summer Project to freshen up on my C++ skills. Seeking to implement various skle
   
 Note to get fdcl-hdf5 to find the hdf5 libraries, I add to run `export CPATH=/usr/include/hdf5/serial/` or add it to my bashrc.
 
-Had issues finding a library installed with anaconda, adding `export LD_LIBRARY_PATH=/home/contagon/anaconda3/lib:$LD_LIBRARY_PATH` did the trick.
+Had issues finding a library installed with anaconda, running `sudo ln -s "$HOME/anaconda3/lib/libhdf5.so.103" "/usr/lib/x86_64-linux-gnu/libhdf5.so.103"` did the tick.
