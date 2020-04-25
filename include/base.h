@@ -33,32 +33,35 @@ class BaseEstimator{
     public:
         int n_features_;
         BaseEstimator(void) {}
-        ~BaseEstimator(void){}
+        virtual ~BaseEstimator(void){}
 };
 
-class RegressorMixin : public BaseEstimator{
+class EstimatorMixin : public BaseEstimator{
     public:
         virtual void fit(const ArrayXXd& X, const ArrayXd& y) = 0;
         virtual ArrayXd predict(const ArrayXXd& X) = 0;
+        virtual float score(const ArrayXXd& X, const ArrayXd& y) = 0;
+};
 
+class RegressorMixin : public EstimatorMixin{
+    public:
         // For regressors return MSE as the metric
         float score(const ArrayXXd& X, const ArrayXd& y){
-
-            ArrayXd prediction = predict(X);
-            return (y-prediction).square().sum();
+            // Make sure everything is in line
+            check_is_fitted();
+            check_X(X);
+            return (y-predict(X)).square().sum();
         }
 };
 
-class ClassifierMixin : public BaseEstimator{
+class ClassifierMixin : public EstimatorMixin{
     public:
-        virtual void fit(const ArrayXXd& X, const ArrayXd& y) = 0;
-        virtual ArrayXd predict(const ArrayXXd& X) = 0;
-
         // For classifiers return accuracy as the metric
         float score(const ArrayXXd& X, const ArrayXd& y){
-
-            ArrayXd prediction = predict(X);
-            return (float)(y==prediction).count() / (float)y.size();
+            // Make sure everything is in line
+            check_is_fitted();
+            check_X(X);
+            return (float)(y==predict(X)).count() / (float)y.size();
         }
 };
 
@@ -86,6 +89,9 @@ class TransformerMixin : public BaseEstimator{
         void fit_transform_inplace(ArrayXXd& X){
             fit(X);
             transform_inplace(X);
+        }
+        void fit(const ArrayXXd& X, const ArrayXd& y){
+            fit(X);
         }
 };
 

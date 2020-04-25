@@ -4,7 +4,7 @@ Summer Project to freshen up on my C++ skills. Seeking to implement various skle
 | Transformers | Classifiers | Regressors | Misc|
 |:----:|:----:|:----:|:----:|
 | PCA |kNeighborsClassifier|  | Test-Train Split |
-| StandardScaler |RadiusNeighborsClassifier| | |
+| StandardScaler |RadiusNeighborsClassifier| | Pipeline |
 | MinMaxScaler | | | |
 
 ## Dependencies
