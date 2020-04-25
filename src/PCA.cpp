@@ -7,7 +7,7 @@ PCA::PCA(int n_components, bool center)
 void PCA::fit(ArrayXXd X){
     // Make sure everything is in order
     check_X_y(X);
-    if(n_components > n_features_)
+    if(n_components > n_features())
         throw std::invalid_argument( "n_components is larger than n_features" );
 
     //Center it first if requested

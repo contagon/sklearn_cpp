@@ -11,8 +11,8 @@ void StandardScaler::fit(ArrayXXd X){
     // Calculate mean and variance
     mean_ = X.colwise().mean();
 
-    var_ = ArrayXd(n_features_);
-    for(int i=0; i<n_features_; i++)
+    var_ = ArrayXd( n_features() );
+    for(int i=0; i<n_features(); i++)
         var_(i) = (X.col(i) - mean_(i)).square().sum() / (X.rows() - 1);
 
     scale_ = var_.sqrt();

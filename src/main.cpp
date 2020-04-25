@@ -13,7 +13,6 @@
 
 #include "model_selection.h"
 #include "Pipeline.h"
-#include <vector>
 
 using namespace Eigen;
 using namespace std; 
@@ -28,11 +27,14 @@ int main()
     Eigen::VectorXd y_predict;
     hf.read("X", X);
     hf.read("y", y);
+    auto [X_train, X_test, y_train, y_test] = test_train_split(X, y, 0.3333, true);
 
-    // Pipeline pipe2({new KNeighborsClassifier(5) });
-    KNeighborsClassifier pipe2(5);
-    pipe2.fit(X, y);
-    cout << pipe2.score(X, y) << endl;
+    //  """ Pipeline Testing """
+    Pipeline pipe2({{"pca", new PCA(10)}, {"knn", new KNeighborsClassifier(5)}});
+    cout << pipe2["knn"].is_fitted() << endl;
+    pipe2.fit(X_train, y_train);
+    cout << pipe2["knn"].is_fitted() << endl;
+    cout << pipe2.score(X_test, y_test) << endl;
 
     // """ Transformer Testing """
     // ArrayXXd Xc = X;
@@ -45,14 +47,15 @@ int main()
     // cout << Xc.row(1) << endl;
     
     // """ Estimator Testing """
-    // auto data = test_train_split(X, y, 0.3333, false);
-    // for(int i=1; i<=25; i+=2){
-    //     RadiusNeighborsClassifier knn(float(i)/10, "distance");
+    // for(int i=1; i<=15; i+=2){
+    //     KNeighborsClassifier knn(i);
     //     // cout  << "Fitting... \n";
-    //     knn.fit(data.X_train, data.y_train);
+    //     knn.fit(X_train, y_train);
     //     // cout << "Scoring... \n";
-    //     cout << float(i)/10 << ": " << knn.score(data.X_test, data.y_test) << "\n";
+    //     cout << float(i) << ": " << knn.score(X_test, y_test) << "\n";
     // }
 
 	return 0; 
 } 
+
+

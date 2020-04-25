@@ -1,6 +1,13 @@
-cmake_minimum_required(VERSION 3.9.0)
+cmake_minimum_required(VERSION 3.10.0)
 project(sklearn)
 
+# Use C++17
+# https://cmake.org/cmake/help/latest/prop_tgt/CXX_STANDARD.html
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Load libraries
 find_package(Eigen3 REQUIRED)
 find_package(FDCL_HDF5 REQUIRED)
 #add_subdirectory(lib/<lib_dir_name>)

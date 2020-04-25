@@ -9,6 +9,7 @@ using namespace std;
 class BaseEstimator{
     private: 
         bool fitted_ = false;
+        int n_features_;
     protected:
         // For supervised methods 
         void check_X_y(const ArrayXXd& X, const ArrayXd& y){
@@ -31,7 +32,9 @@ class BaseEstimator{
                 throw std::invalid_argument( "Estimator hasn't been fitted yet" );
         }
     public:
-        int n_features_;
+        bool is_fitted(){ return fitted_; }
+        int  n_features(){ return n_features_; }
+        
         BaseEstimator(void) {}
         virtual ~BaseEstimator(void){}
 };
