@@ -13,7 +13,9 @@ ArrayXi n_argmax(ArrayXd& array, const int& N){
 
 // Default Constructor
 KNeighborsClassifier::KNeighborsClassifier(int n_neighbors, string weights) 
-                : n_neighbors(n_neighbors), weights(weights) {}
+                : BaseEstimator({{"n_neighbors", n_neighbors}, {"weights", weights}}),
+                n_neighbors(get<int>(params["n_neighbors"])),
+                weights(get<string>(params["weights"])) {}
 
 void KNeighborsClassifier::fit(const ArrayXXd& X, const ArrayXd& y){
     check_X_y(X, y);
@@ -33,7 +35,7 @@ ArrayXd KNeighborsClassifier::predict(const ArrayXXd& X){
         ArrayXd distance = (X_.rowwise() - x).rowwise().squaredNorm();
 
         // Get closests N indices
-        ArrayXi idxs = n_argmax(distance, n_neighbors);
+        ArrayXi idxs = n_argmax(distance, get<int>(params["n_neighbors"]));
 
         // Give weights to each label
         map<double, int> counter;

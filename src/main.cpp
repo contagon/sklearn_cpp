@@ -13,10 +13,14 @@
 
 #include "model_selection.h"
 #include "Pipeline.h"
+#include <variant>
+
+#include <typeinfo>
 
 using namespace Eigen;
 using namespace std; 
 
+typedef variant<bool*, int*, float*, string*> prm_ptr;
 
 int main() 
 { 
@@ -29,12 +33,25 @@ int main()
     hf.read("y", y);
     auto [X_train, X_test, y_train, y_test] = test_train_split(X, y, 0.3333, true);
 
+    KNeighborsClassifier knn(5);
+    cout << "n_neighbors: " << knn.n_neighbors << endl;
+    cout << "weights: " << knn.weights << endl;
+
+    knn.set_params({{"n_neighbors", 10}, {"weights", "distance"s}});
+
+    cout << "n_neighbors: " << knn.n_neighbors << endl;
+    cout << "weights: " << knn.weights << endl;
+
+    knn.n_neighbors = 34;
+
+    cout << "n_neighbors: " << knn.n_neighbors << endl;
+
     //  """ Pipeline Testing """
-    Pipeline pipe2({{"pca", new PCA(10)}, {"knn", new KNeighborsClassifier(5)}});
-    cout << pipe2["knn"].is_fitted() << endl;
-    pipe2.fit(X_train, y_train);
-    cout << pipe2["knn"].is_fitted() << endl;
-    cout << pipe2.score(X_test, y_test) << endl;
+    // Pipeline pipe2({{"pca", new PCA(10)}, {"knn", new KNeighborsClassifier(5)}});
+    // cout << pipe2["knn"].is_fitted() << endl;
+    // pipe2.fit(X_train, y_train);
+    // cout << pipe2["knn"].is_fitted() << endl;
+    // cout << pipe2.score(X_test, y_test) << endl;
 
     // """ Transformer Testing """
     // ArrayXXd Xc = X;

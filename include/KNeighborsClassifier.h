@@ -9,8 +9,10 @@ using namespace Eigen;
 
 class KNeighborsClassifier: public ClassifierMixin{
     public:
-        int n_neighbors;
-        string weights;
+        map<string, prm> test;
+
+        int& n_neighbors;
+        string& weights;
         ArrayXXd X_;
         ArrayXd y_;
     

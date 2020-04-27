@@ -2,15 +2,20 @@
 #define BASE_INTERFACES
 
 #include <Eigen/Dense>
+#include <map>
+#include <variant>
 
 using namespace Eigen;
 using namespace std;
+
+typedef variant<bool, int, float, string> prm;
 
 class BaseEstimator{
     private: 
         bool fitted_ = false;
         int n_features_;
     protected:
+        map<string, prm> params;
         // For supervised methods 
         void check_X_y(const ArrayXXd& X, const ArrayXd& y){
             if(X.rows() != y.rows())
@@ -32,10 +37,22 @@ class BaseEstimator{
                 throw std::invalid_argument( "Estimator hasn't been fitted yet" );
         }
     public:
+        // Return params 
+        map<string, prm> get_params(){ return params; }
+        // Set params using a map
+        void set_params(map<string,prm> new_params){
+            for( auto [name, new_param] : new_params){
+                if(params.count(name) == 1)
+                    params[name] = new_param;
+                else
+                    throw runtime_error("Error: Invalid Parameter to set");
+            } 
+        }
         bool is_fitted(){ return fitted_; }
         int  n_features(){ return n_features_; }
         
         BaseEstimator(void) {}
+        BaseEstimator(map<string,prm> params) : params(params) {}
         virtual ~BaseEstimator(void){}
 };
 
