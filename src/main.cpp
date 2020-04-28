@@ -37,14 +37,11 @@ int main()
     cout << "n_neighbors: " << knn.n_neighbors << endl;
     cout << "weights: " << knn.weights << endl;
 
-    knn.set_params({{"n_neighbors", 10}, {"weights", "distance"s}});
+    knn.set_params({});
 
     cout << "n_neighbors: " << knn.n_neighbors << endl;
     cout << "weights: " << knn.weights << endl;
 
-    knn.n_neighbors = 34;
-
-    cout << "n_neighbors: " << knn.n_neighbors << endl;
 
     //  """ Pipeline Testing """
     // Pipeline pipe2({{"pca", new PCA(10)}, {"knn", new KNeighborsClassifier(5)}});

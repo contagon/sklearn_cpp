@@ -2,7 +2,9 @@
 
 // Default Constructor
 RadiusNeighborsClassifier::RadiusNeighborsClassifier(float radius, string weights) 
-                : radius(radius), weights(weights) {}
+    : BaseEstimator({{"radius", weights},{"feature_max", weights}}),
+    radius(get<float>(params["radius"])), 
+    weights(get<string>(params["weights"])) {}
 
 void RadiusNeighborsClassifier::fit(const ArrayXXd& X, const ArrayXd& y){
     check_X_y(X, y);

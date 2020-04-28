@@ -8,8 +8,9 @@ using namespace Eigen;
 
 class MinMaxScaler: public TransformerMixin{
     public:
-        float feature_min;
-        float feature_max;
+        float& feature_min;
+        float& feature_max;
+        
         ArrayXd scale_;
         ArrayXd min_;
         ArrayXd data_min_;

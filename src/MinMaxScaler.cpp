@@ -2,7 +2,9 @@
 
 // Default Constructor
 MinMaxScaler::MinMaxScaler(float feature_min, float feature_max) 
-            : feature_min(feature_min), feature_max(feature_max) {}
+    : BaseEstimator({{"feature_min", feature_min},{"feature_max", feature_max}}),
+    feature_min(get<float>(params["feature_min"])), 
+    feature_max(get<float>(params["feature_max"])) {}
 
 void MinMaxScaler::fit(ArrayXXd X){
     // Make sure everything is in order

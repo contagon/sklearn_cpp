@@ -8,8 +8,8 @@ using namespace Eigen;
 
 class StandardScaler: public TransformerMixin{
     public:
-        bool with_mean;
-        bool with_std;
+        bool& with_mean;
+        bool& with_std;
 
         ArrayXd mean_;
         ArrayXd var_;

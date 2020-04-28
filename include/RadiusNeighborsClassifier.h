@@ -9,8 +9,9 @@ using namespace Eigen;
 
 class RadiusNeighborsClassifier: public ClassifierMixin{
     public:
-        float radius;
-        string weights;
+        float& radius;
+        string& weights;
+        
         ArrayXXd X_;
         ArrayXd y_;
     

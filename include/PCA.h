@@ -8,8 +8,8 @@ using namespace Eigen;
 
 class PCA: public TransformerMixin{
     public:
-        int n_components;
-        bool center;
+        int& n_components;
+        bool& center;
 
         ArrayXXd V_;
         ArrayXd explained_variance_;

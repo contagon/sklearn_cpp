@@ -2,13 +2,15 @@
 
 // Default Constructor
 PCA::PCA(int n_components, bool center) 
-                : n_components(n_components), center(center) {}
+    : BaseEstimator({{"n_components", n_components},{"feature_max", center}}),
+    n_components(get<int>(params["n_components"])), 
+    center(get<bool>(params["center"]))  {}
 
 void PCA::fit(ArrayXXd X){
     // Make sure everything is in order
     check_X_y(X);
     if(n_components > n_features())
-        throw std::invalid_argument( "n_components is larger than n_features" );
+        throw invalid_argument( "n_components is larger than n_features" );
 
     //Center it first if requested
     if(center){
