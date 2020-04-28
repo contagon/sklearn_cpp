@@ -92,4 +92,6 @@ BaseEstimator& Pipeline::operator[](string goal_name){
         if(name == goal_name)
             return *estimator;
     }
+    throw invalid_argument( "Step doesn't exist" );
+
 }
