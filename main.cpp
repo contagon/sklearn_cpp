@@ -21,7 +21,7 @@ using namespace std;
 int main() 
 { 
     // Read data
-	HDF5::File hf = HDF5::File("../data/digits.h5", HDF5::File::ReadOnly);
+	HDF5::File hf = HDF5::File("../data/iris.h5", HDF5::File::ReadOnly);
     Eigen::MatrixXd X;
     Eigen::VectorXd y;
     Eigen::VectorXd y_predict;
@@ -29,12 +29,15 @@ int main()
     hf.read("y", y);
     auto [X_train, X_test, y_train, y_test] = test_train_split(X, y, 0.3333, true);
 
+    cout << (X_test(0,0) == X.array()(0,0)) << endl;
+    cout << X_test(0,0) << endl;
+    cout << X.array()(0,0) << endl;
     //  """ Pipeline Testing """
-    Pipeline pipe2({{"pca", new PCA(10)}, {"knn", new KNeighborsClassifier(5)}});
-    cout << pipe2["knn"].is_fitted() << endl;
-    pipe2.fit(X_train, y_train);
-    cout << pipe2["knn"].is_fitted() << endl;
-    cout << pipe2.score(X_test, y_test) << endl;
+    // Pipeline pipe2({{"pca", new PCA(10)}, {"knn", new KNeighborsClassifier(5)}});
+    // cout << pipe2["knn"].is_fitted() << endl;
+    // pipe2.fit(X_train, y_train);
+    // cout << pipe2["knn"].is_fitted() << endl;
+    // cout << pipe2.score(X_test, y_test) << endl;
 
     // """ Transformer Testing """
     // ArrayXXd Xc = X;

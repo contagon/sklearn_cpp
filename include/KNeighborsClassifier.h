@@ -7,6 +7,8 @@
 
 using namespace Eigen;
 
+ArrayXi n_argmax(ArrayXd& array, const int& N);
+
 class KNeighborsClassifier: public ClassifierMixin{
     public:
         int n_neighbors;
