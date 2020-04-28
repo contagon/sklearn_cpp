@@ -40,12 +40,12 @@ class BaseEstimator{
         // Return params 
         map<string, prm> get_params(){ return params; }
         // Set params using a map
-        void set_params(map<string,prm> new_params){
+        virtual void set_params(map<string,prm> new_params){
             for( auto [name, new_param] : new_params){
                 if(params.count(name) == 1)
                     params[name] = new_param;
                 else
-                    throw runtime_error("Error: Invalid Parameter to set");
+                    throw invalid_argument("Invalid Parameter name");
             } 
         }
         bool is_fitted(){ return fitted_; }

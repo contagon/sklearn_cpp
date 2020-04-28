@@ -5,13 +5,14 @@
 #include <vector>
 #include "base.h"
 
+using namespace std;
 using namespace Eigen;
 
 class Pipeline: public EstimatorMixin, public TransformerMixin{
     public:
-        vector<pair<string, BaseEstimator*>> estimators;
+        vector<pair<string, BaseEstimator*>> steps;
 
-        Pipeline(vector<pair<string, BaseEstimator*>> estimators);
+        Pipeline(vector<pair<string, BaseEstimator*>> steps);
         ~Pipeline();
 
         // Methods if we end with an Estimator
@@ -26,6 +27,12 @@ class Pipeline: public EstimatorMixin, public TransformerMixin{
 
         // For indexing
         BaseEstimator& operator[](string goal_name);
+        BaseEstimator& operator[](int idx);
+        Pipeline operator()(int start, int stop);
+
+        // Override set_params
+        void set_params(map<string,prm> new_params);
+
 };
 
 #endif

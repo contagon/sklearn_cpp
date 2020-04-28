@@ -13,19 +13,17 @@
 
 #include "model_selection.h"
 #include "Pipeline.h"
-#include <variant>
 
-#include <typeinfo>
+#include <vector>
+#include <map>
 
 using namespace Eigen;
 using namespace std; 
 
-typedef variant<bool*, int*, float*, string*> prm_ptr;
-
 int main() 
 { 
     // Read data
-	HDF5::File hf = HDF5::File("../data/digits.h5", HDF5::File::ReadOnly);
+	HDF5::File hf = HDF5::File("../data/iris.h5", HDF5::File::ReadOnly);
     Eigen::MatrixXd X;
     Eigen::VectorXd y;
     Eigen::VectorXd y_predict;
@@ -33,22 +31,16 @@ int main()
     hf.read("y", y);
     auto [X_train, X_test, y_train, y_test] = test_train_split(X, y, 0.3333, true);
 
-    KNeighborsClassifier knn(5);
-    cout << "n_neighbors: " << knn.n_neighbors << endl;
-    cout << "weights: " << knn.weights << endl;
-
-    knn.set_params({});
-
-    cout << "n_neighbors: " << knn.n_neighbors << endl;
-    cout << "weights: " << knn.weights << endl;
-
-
     //  """ Pipeline Testing """
-    // Pipeline pipe2({{"pca", new PCA(10)}, {"knn", new KNeighborsClassifier(5)}});
-    // cout << pipe2["knn"].is_fitted() << endl;
-    // pipe2.fit(X_train, y_train);
-    // cout << pipe2["knn"].is_fitted() << endl;
-    // cout << pipe2.score(X_test, y_test) << endl;
+    //  Can't do subpipe like this, no way to properly delete pointer
+    Pipeline pipe1 = Pipeline({{"pca", new PCA(2)}});
+    Pipeline pipe({  {"pipe", &pipe1 },
+                 {"knn", new KNeighborsClassifier(5)}});
+    
+    pipe.fit(X,y);
+    Pipeline subpipe = pipe(0,1);
+    
+    
 
     // """ Transformer Testing """
     // ArrayXXd Xc = X;
