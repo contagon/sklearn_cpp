@@ -1,6 +1,10 @@
 #include "Pipeline.h"
+#include <iostream>
+#include <typeinfo>
 
-// Default Constructor
+/********************************************************
+*********             Overriding Methods            *****
+*********************************************************/
 Pipeline::Pipeline(vector<pair<string, BaseEstimator*>> steps) 
         : steps(steps) {}
 
@@ -9,6 +13,39 @@ Pipeline::~Pipeline(){
         delete step;
 
     steps.clear();
+}
+
+Pipeline::Pipeline(const Pipeline& other){
+    for(int i=0; i<other.steps.size()-1; i++){
+        BaseEstimator* temp = new TransformerMixin;
+        *temp = *other.steps[i].second;
+        this->steps.push_back( make_pair(other.steps[i].first, temp) );
+    }
+    // Put last element in, whether it's a transformer or estimator
+    try{
+        dynamic_cast<TransformerMixin&>( *other.steps.back().second );
+        BaseEstimator* temp = new TransformerMixin;
+        *temp = *other.steps.back().second;
+        this->steps.push_back( make_pair(other.steps.back().first, temp) );
+    }
+    catch(const bad_cast e){
+        BaseEstimator* temp = new EstimatorMixin;
+        *temp = *other.steps.back().second;
+        this->steps.push_back( make_pair(other.steps.back().first, temp) );
+    }
+}
+Pipeline& Pipeline::operator=(const Pipeline& rhs){
+    Pipeline copy(rhs);
+
+    // Delete current values
+    for (auto [name, step] : steps)
+        delete step;
+    steps.clear();
+
+    // Assign to copy ones
+    this->steps = copy.steps;
+
+    return *this;
 }
 
 
@@ -86,23 +123,34 @@ void Pipeline::inverse_transform_inplace(ArrayXXd& X){
 /********************************************************
 *********               Indexing Methods            *****
 *********************************************************/
-BaseEstimator& Pipeline::operator[](string goal_name){
+BaseEstimator* Pipeline::operator[](string goal_name){
     // Do naive search through steps
     for(auto const& [name, step] : steps){
         if(name == goal_name)
-            return *step;
+            return step;
     }
     throw invalid_argument( "Not a valid step name" );
 }
-BaseEstimator& Pipeline::operator[](int idx){
-    return *(steps[idx].second);
+BaseEstimator* Pipeline::operator[](int idx){
+    return steps[idx].second;
 }
 Pipeline Pipeline::operator()(int start, int stop){
+    // check to make sure things are in range
+    if(start < 0) throw invalid_argument("Lower index is too low");
+    if(stop > steps.size()) throw invalid_argument("Upper index is too high");
     // Make copy of itself
-    Pipeline subpipe = *this;
-    // Replace steps with indices
-    // TODO: These pointers just point to the same place, need to make full copy
-    vector<pair<string, BaseEstimator*>> substep(subpipe.steps.begin()+start, subpipe.steps.begin()+stop);
+    Pipeline subpipe(*this);
+
+    // Basically just clear portion that we don't want
+    vector<pair<string, BaseEstimator*>> substep;
+    int i = 0;
+    for(auto [name, step] : subpipe.steps){
+        if(start <= i && i < stop)
+            substep.push_back( make_pair(name, step) );
+        else
+            delete step;
+        i++;
+    }
     subpipe.steps = substep;
     return subpipe;
 }
@@ -120,6 +168,14 @@ void Pipeline::set_params(map<string,prm> new_params){
     for( auto [name, step] : steps){
         step->set_params(step_params[name]);
     }
-    throw invalid_argument( "Step doesn't exist" );
+}
 
+map<string, prm> Pipeline::get_params(){
+    map<string, prm> all_params;
+    for(auto [step_name, step] : steps){
+        for(auto [param_name, param] : step->get_params()){
+            all_params[ step_name + "__" + param_name] = param;
+        }
+    }
+    return all_params;
 }
