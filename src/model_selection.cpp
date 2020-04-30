@@ -6,7 +6,8 @@ Split test_train_split(const ArrayXXd& X, const ArrayXd& y, float test_size, boo
 
     // make indices and shuffle them
     ArrayXd idx = ArrayXd::LinSpaced(y.size(),0,y.size()-1);
-    random_shuffle(idx.data(), idx.data()+y.size());
+    if(shuffle)
+        random_shuffle(idx.data(), idx.data()+idx.size());
 
     // Split indices
     ArrayXd test_idx = idx( seq(0, test_num) );

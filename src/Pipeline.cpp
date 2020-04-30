@@ -120,4 +120,6 @@ void Pipeline::set_params(map<string,prm> new_params){
     for( auto [name, step] : steps){
         step->set_params(step_params[name]);
     }
+    throw invalid_argument( "Step doesn't exist" );
+
 }
