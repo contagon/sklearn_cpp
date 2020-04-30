@@ -14,9 +14,11 @@
 #include "model_selection.h"
 #include "Pipeline.h"
 
+#include <vector>
+#include <map>
+
 using namespace Eigen;
 using namespace std; 
-
 
 int main() 
 { 
@@ -29,10 +31,17 @@ int main()
     hf.read("y", y);
     auto [X_train, X_test, y_train, y_test] = test_train_split(X, y, 0.3333, true);
 
-    cout << (X_test(0,0) == X.array()(0,0)) << endl;
-    cout << X_test(0,0) << endl;
-    cout << X.array()(0,0) << endl;
     //  """ Pipeline Testing """
+    //  Can't do subpipe like this, no way to properly delete pointer
+    // Pipeline pipe1 = Pipeline({{"pca", new PCA(2)}});
+    // Pipeline pipe({  {"pipe", &pipe1 },
+                //  {"knn", new KNeighborsClassifier(5)}});
+    
+    PCA* pca = new PCA(3);
+    BaseEstimator* be = new PCA(2);
+    *be = *pca;
+    cout << typeid(dynamic_cast<TransformerMixin&>(*be)).name() << endl;
+    
     // Pipeline pipe2({{"pca", new PCA(10)}, {"knn", new KNeighborsClassifier(5)}});
     // cout << pipe2["knn"].is_fitted() << endl;
     // pipe2.fit(X_train, y_train);

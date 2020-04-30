@@ -2,7 +2,9 @@
 
 // Default Constructor
 StandardScaler::StandardScaler(bool with_mean, bool with_std) 
-                : with_mean(with_mean), with_std(with_std) {}
+    : BaseEstimator({{"with_mean", with_mean},{"with_std", with_std}}),
+    with_mean(get<bool>(params["with_mean"])), 
+    with_std(get<bool>(params["with_std"])) {}
 
 void StandardScaler::fit(ArrayXXd X){
     // Make sure everything is in order

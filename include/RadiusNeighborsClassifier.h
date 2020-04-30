@@ -9,8 +9,9 @@ using namespace Eigen;
 
 class RadiusNeighborsClassifier: public ClassifierMixin{
     public:
-        float radius;
-        string weights;
+        float& radius;
+        string& weights;
+        
         ArrayXXd X_;
         ArrayXd y_;
     
@@ -19,6 +20,9 @@ class RadiusNeighborsClassifier: public ClassifierMixin{
 
         void fit(const ArrayXXd& X, const ArrayXd& y);
         ArrayXd predict(const ArrayXXd& X);
+        virtual RadiusNeighborsClassifier* clone() const{
+            return new RadiusNeighborsClassifier(*this);
+        }
 };
 
 #endif

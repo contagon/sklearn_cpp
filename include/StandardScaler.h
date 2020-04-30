@@ -8,8 +8,8 @@ using namespace Eigen;
 
 class StandardScaler: public TransformerMixin{
     public:
-        bool with_mean;
-        bool with_std;
+        bool& with_mean;
+        bool& with_std;
 
         ArrayXd mean_;
         ArrayXd var_;
@@ -21,6 +21,9 @@ class StandardScaler: public TransformerMixin{
         void fit(ArrayXXd X);
         void transform_inplace(ArrayXXd& X);
         void inverse_transform_inplace(ArrayXXd& X);
+        virtual StandardScaler* clone() const{
+            return new StandardScaler(*this);
+        }
 };
 
 #endif
