@@ -22,6 +22,9 @@ class MinMaxScaler: public TransformerMixin{
         void fit(ArrayXXd X);
         void transform_inplace(ArrayXXd& X);
         void inverse_transform_inplace(ArrayXXd& X);
+        virtual MinMaxScaler* clone() const{
+            return new MinMaxScaler(*this);
+        }
 };
 
 #endif

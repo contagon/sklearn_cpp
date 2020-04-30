@@ -61,8 +61,8 @@ TEST_F(pipeTest, Indexing){
     EXPECT_NO_THROW( Pipeline subpipe = pipe(1,3); );
     Pipeline subpipe = pipe(1,3);
     EXPECT_EQ(subpipe.steps.size(), 2);
-    // EXPECT_STREQ(subpipe.steps[0].first, "pca"s);
-    // EXPECT_STREQ(subpipe.steps[1].first, "knn"s);
+    EXPECT_NO_THROW(dynamic_cast<PCA&>(*subpipe.steps[0].second));
+    EXPECT_NO_THROW(dynamic_cast<KNeighborsClassifier&>(*subpipe.steps[1].second));
 }
 
 TEST_F(pipeTest, SetParams){

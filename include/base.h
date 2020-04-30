@@ -54,13 +54,15 @@ class BaseEstimator{
         BaseEstimator(void) {}
         BaseEstimator(map<string,prm> params) : params(params) {}
         virtual ~BaseEstimator(void){}
+        // Clone 
+        virtual BaseEstimator* clone() const = 0;
 };
 
 class EstimatorMixin : public virtual BaseEstimator{
     public:
-        virtual void fit(const ArrayXXd& X, const ArrayXd& y){}
-        virtual ArrayXd predict(const ArrayXXd& X){}
-        virtual float score(const ArrayXXd& X, const ArrayXd& y){}
+        virtual void fit(const ArrayXXd& X, const ArrayXd& y) = 0;
+        virtual ArrayXd predict(const ArrayXXd& X) = 0;
+        virtual float score(const ArrayXXd& X, const ArrayXd& y) = 0;
 };
 
 class RegressorMixin : public EstimatorMixin{
@@ -87,9 +89,9 @@ class ClassifierMixin : public EstimatorMixin{
 
 class TransformerMixin : public virtual BaseEstimator{
     public:
-        virtual void fit(ArrayXXd X){}
-        virtual void transform_inplace(ArrayXXd& X){}
-        virtual void inverse_transform_inplace(ArrayXXd& X){}
+        virtual void fit(ArrayXXd X) = 0;
+        virtual void transform_inplace(ArrayXXd& X) = 0;
+        virtual void inverse_transform_inplace(ArrayXXd& X) = 0;
 
         // This will return a copy from the transform_inplace function
         ArrayXXd transform(ArrayXXd X){

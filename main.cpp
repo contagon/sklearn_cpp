@@ -38,7 +38,7 @@ int main()
                 //  {"knn", new KNeighborsClassifier(5)}});
     
     PCA* pca = new PCA(3);
-    BaseEstimator* be = new TransformerMixin;
+    BaseEstimator* be = new PCA(2);
     *be = *pca;
     cout << typeid(dynamic_cast<TransformerMixin&>(*be)).name() << endl;
     

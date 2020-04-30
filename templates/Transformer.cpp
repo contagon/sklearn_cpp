@@ -1,7 +1,11 @@
 #include "Transfomer.h"
 
 // Default Constructor
-Transfomer::Transfomer() {}
+Transfomer::Transfomer(int fake_param) 
+        : BaseEstimator({{"fake_param", fake_param}}), 
+        fake_param(get<int>(params["fake_param"]) {}
+        // The actual value is saved in the base class map
+        // But we make a reference to it to make syntax easier throughout our class
 
 void Transfomer::fit(ArrayXXd X){
     // Make sure everything is in order

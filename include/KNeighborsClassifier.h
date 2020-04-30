@@ -22,6 +22,9 @@ class KNeighborsClassifier: public ClassifierMixin{
 
         void fit(const ArrayXXd& X, const ArrayXd& y);
         ArrayXd predict(const ArrayXXd& X);
+        virtual KNeighborsClassifier* clone() const{
+            return new KNeighborsClassifier(*this);
+        }
 };
 
 #endif

@@ -16,22 +16,9 @@ Pipeline::~Pipeline(){
 }
 
 Pipeline::Pipeline(const Pipeline& other){
-    for(int i=0; i<other.steps.size()-1; i++){
-        BaseEstimator* temp = new TransformerMixin;
-        *temp = *other.steps[i].second;
-        this->steps.push_back( make_pair(other.steps[i].first, temp) );
-    }
-    // Put last element in, whether it's a transformer or estimator
-    try{
-        dynamic_cast<TransformerMixin&>( *other.steps.back().second );
-        BaseEstimator* temp = new TransformerMixin;
-        *temp = *other.steps.back().second;
-        this->steps.push_back( make_pair(other.steps.back().first, temp) );
-    }
-    catch(const bad_cast e){
-        BaseEstimator* temp = new EstimatorMixin;
-        *temp = *other.steps.back().second;
-        this->steps.push_back( make_pair(other.steps.back().first, temp) );
+    for(auto [name, step] : other.steps){
+        BaseEstimator* temp = step->clone();
+        this->steps.push_back( make_pair(name, temp) );
     }
 }
 Pipeline& Pipeline::operator=(const Pipeline& rhs){
@@ -155,6 +142,10 @@ Pipeline Pipeline::operator()(int start, int stop){
     return subpipe;
 }
 
+
+/********************************************************
+*********         Getting/Setting Params            *****
+*********************************************************/
 void Pipeline::set_params(map<string,prm> new_params){
     // Make a map for each step with it's params
     map<string,map<string,prm>> step_params;

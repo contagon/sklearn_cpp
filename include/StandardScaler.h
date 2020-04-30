@@ -21,6 +21,9 @@ class StandardScaler: public TransformerMixin{
         void fit(ArrayXXd X);
         void transform_inplace(ArrayXXd& X);
         void inverse_transform_inplace(ArrayXXd& X);
+        virtual StandardScaler* clone() const{
+            return new StandardScaler(*this);
+        }
 };
 
 #endif

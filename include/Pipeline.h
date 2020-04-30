@@ -36,6 +36,10 @@ class Pipeline: public EstimatorMixin, public TransformerMixin{
         // Override set_params and get_params
         void set_params(map<string,prm> new_params);
         map<string, prm> get_params();
+
+        virtual Pipeline* clone() const{
+            return new Pipeline(*this);
+        }
 };
 
 #endif

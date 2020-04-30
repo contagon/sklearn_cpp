@@ -22,6 +22,9 @@ class PCA: public TransformerMixin{
         void fit(ArrayXXd X);
         void transform_inplace(ArrayXXd& X);
         void inverse_transform_inplace(ArrayXXd& X);
+        virtual PCA* clone() const{
+            return new PCA(*this);
+        }
 };
 
 #endif
