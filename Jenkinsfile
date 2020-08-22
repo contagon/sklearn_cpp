@@ -4,6 +4,7 @@ pipeline {
     stage('build') {
       steps {
         echo 'Hey'
+		echo 'Hey again'
       }
     }
 
