@@ -15,7 +15,10 @@ pipeline {
     }
     stage('test') {
       steps {
-        sh 'bash tests'
+        sh '''
+          cd build
+          bash tests
+        '''
       }
     }
 
