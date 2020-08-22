@@ -17,6 +17,7 @@ pipeline {
       steps {
         sh '''
           cd build
+          chmod +x tests
           bash tests
         '''
       }
