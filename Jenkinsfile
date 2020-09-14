@@ -1,9 +1,5 @@
 pipeline {
-  agent { 
-	dockerfile {
-		args '-u root --privileged'	
-    }
-  }
+  agent { dockerfile true }
   stages {
     stage('Build') {
       steps {
