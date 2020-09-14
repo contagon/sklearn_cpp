@@ -34,7 +34,7 @@ pipeline {
                failThresholdDefinitelyLost: '',
                failThresholdInvalidReadWrite: '',
                failThresholdTotal: '',
-               pattern: 'valgrind.xml',
+               pattern: 'build/valgrind.xml',
                publishResultsForAbortedBuilds: false,
                publishResultsForFailedBuilds: false,
                sourceSubstitutionPaths: '',
