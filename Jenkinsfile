@@ -18,14 +18,14 @@ pipeline {
         sh '''
           cd build
           chmod +x tests
-          ./tests
+          ./tests --gtest_output=xml:results.xml
         '''
       }
     }
-    post {
+  }
+  post {
         always {
             junit 'results.xml'
         }
     }
-  }
 }
