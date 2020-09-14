@@ -17,7 +17,7 @@ pipeline {
       steps {
         sh '''
           cd build
-          ./tests --gtest_output=xml:results.xml
+          valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --xml=yes --xml-file=valgrind.xml ./tests --gtest_output=xml:results.xml
         '''
       }
     }
@@ -26,8 +26,11 @@ pipeline {
         always {
             xunit (
                 thresholds: [ skipped(failureThreshold: '0'), failed(failureThreshold: '0') ],
-                tools: [ GoogleTest(pattern: 'build/*.xml') ]
+                tools: [ GoogleTest(pattern: 'build/results.xml') ]
             )
+			publishValgrind (
+                pattern: 'valgrind.xml',
+           )
         }
     }
 }
