@@ -1,7 +1,7 @@
 pipeline {
   agent { dockerfile true }
   stages {
-    stage('build') {
+    stage('Build') {
       steps {
         sh '''
           cd data
@@ -13,7 +13,7 @@ pipeline {
         '''
       }
     }
-    stage('test') {
+    stage('Test') {
       steps {
         sh '''
           cd build
@@ -22,6 +22,10 @@ pipeline {
         '''
       }
     }
-
+    post {
+        always {
+            junit 'results.xml'
+        }
+    }
   }
 }
