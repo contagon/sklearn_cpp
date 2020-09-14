@@ -34,7 +34,7 @@ pipeline {
                failThresholdDefinitelyLost: '',
                failThresholdInvalidReadWrite: '',
                failThresholdTotal: '',
-               pattern: '*.memcheck',
+               pattern: 'valgrind.xml',
                publishResultsForAbortedBuilds: false,
                publishResultsForFailedBuilds: false,
                sourceSubstitutionPaths: '',
