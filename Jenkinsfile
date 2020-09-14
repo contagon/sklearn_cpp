@@ -21,15 +21,16 @@ pipeline {
       steps {
         sh '''
           cd build
-          chmod +x tests
+		  echo whoami
           ./tests --gtest_output=xml:results.xml
+		  echo ls
         '''
       }
     }
   }
   post {
         always {
-            junit 'results.xml'
+            junit 'build/results.xml'
         }
     }
 }
