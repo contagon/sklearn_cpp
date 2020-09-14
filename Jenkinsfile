@@ -28,8 +28,19 @@ pipeline {
                 thresholds: [ skipped(failureThreshold: '0'), failed(failureThreshold: '0') ],
                 tools: [ GoogleTest(pattern: 'build/results.xml') ]
             )
-			publishValgrind (
-                pattern: 'valgrind.xml',
+            publishValgrind (
+               failBuildOnInvalidReports: false,
+               failBuildOnMissingReports: false,
+               failThresholdDefinitelyLost: '',
+               failThresholdInvalidReadWrite: '',
+               failThresholdTotal: '',
+               pattern: '*.memcheck',
+               publishResultsForAbortedBuilds: false,
+               publishResultsForFailedBuilds: false,
+               sourceSubstitutionPaths: '',
+               unstableThresholdDefinitelyLost: '',
+               unstableThresholdInvalidReadWrite: '',
+               unstableThresholdTotal: ''
            )
         }
     }
