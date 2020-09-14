@@ -17,7 +17,6 @@ pipeline {
       steps {
         sh '''
           cd build
-		  echo "${BUILD_USER}"
           ./tests --gtest_output=xml:results.xml
         '''
       }
