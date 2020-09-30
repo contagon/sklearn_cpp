@@ -1,38 +1,71 @@
-cmake_minimum_required(VERSION 3.10.0)
-project(sklearn_cpp)
+#################### BASIC SETUP ####################
+cmake_minimum_required(VERSION 3.15.0)
+project(
+    sklearn_cpp
+    VERSION 0.1
+    LANGUAGES CXX)
 
-# Use C++17
-# https://cmake.org/cmake/help/latest/prop_tgt/CXX_STANDARD.html
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
+include(FetchContent)
 
-# Load libraries
-find_package(Eigen3 REQUIRED)
+
+#################### Load libraries ####################
+#eigen 3
+FetchContent_Declare(
+    Eigen3
+    GIT_REPOSITORY  https://gitlab.com/libeigen/eigen.git
+    GIT_TAG         master
+)
+FetchContent_MakeAvailable(Eigen3)
+
+#package for reading/writing h5 files
 find_package(FDCL_HDF5 REQUIRED)
 
-# Google Testing
-add_subdirectory(${PROJECT_SOURCE_DIR}/extern/googletest/googletest)
-ENABLE_TESTING()
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+#google testing
+FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG        release-1.8.0
+)
+FetchContent_GetProperties(googletest)
+if(NOT googletest_POPULATED)
+    FetchContent_Populate(googletest)
+    add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
+endif()
 
-# Get all header files in 
-include_directories(
-    include
-    ${EIGEN3_INCLUDE_DIRS}
-    )
 
-# Get all cpp files into a static library to be shared
-file(GLOB SOURCES "src/*.cpp")
-add_library(sklearn STATIC ${SOURCES})
+#################### Make Sklearn library ####################
+add_library(sklearn 
+                src/model_selection.cpp
+                src/KNeighborsClassifier.cpp
+                src/MinMaxScaler.cpp
+                src/PCA.cpp
+                src/Pipeline.cpp
+                src/RadiusNeighborsClassifier.cpp
+                src/StandardScaler.cpp
+                include/model_selection.h
+                include/KNeighborsClassifier.h
+                include/MinMaxScaler.h
+                include/PCA.h
+                include/Pipeline.h
+                include/RadiusNeighborsClassifier.h
+                include/StandardScaler.h
+                include/base.h)
+target_include_directories(sklearn PUBLIC include)
 
-# Main executable
-add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} fdcl_hdf5 sklearn)
+target_link_libraries(sklearn PUBLIC Eigen3::Eigen)
+target_compile_features(sklearn PUBLIC cxx_std_17)
 
-# Test executable
-file(GLOB TESTS "tests/*.cpp")
-add_executable(tests ${TESTS})
+
+#################### Make main executable ####################
+add_executable(main_test main.cpp)
+target_link_libraries(main_test PRIVATE sklearn fdcl_hdf5)
+
+
+#################### Add Tests in ####################
+add_executable(tests
+                tests/test_all.cpp
+                tests/test_knn.cpp
+                tests/test_ms.cpp
+                tests/test_pipe.cpp)
 target_link_libraries(tests PRIVATE gtest fdcl_hdf5 sklearn)
-add_test(NAME tests COMMAND tests
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+add_custom_target(test COMMAND tests)

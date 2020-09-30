@@ -5,7 +5,7 @@ pipeline {
       steps {
         sh '''
           cd data
-          python save_data.py
+          python3 save_data.py
           cd ..
           mkdir build && cd build
           cmake ..
