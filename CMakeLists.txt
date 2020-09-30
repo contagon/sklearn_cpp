@@ -1,3 +1,4 @@
+#################### BASIC SETUP ####################
 cmake_minimum_required(VERSION 3.15.0)
 project(
     sklearn_cpp
@@ -6,7 +7,9 @@ project(
 
 include(FetchContent)
 
-# Load libraries
+
+#################### Load libraries ####################
+#eigen 3
 FetchContent_Declare(
     Eigen3
     GIT_REPOSITORY  https://gitlab.com/libeigen/eigen.git
@@ -14,15 +17,23 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Eigen3)
 
+#package for reading/writing h5 files
+find_package(FDCL_HDF5 REQUIRED)
+
+#google testing
 FetchContent_Declare(
-    fdcl_hdf5
-    GIT_REPOSITORY  https://github.com/skulumani/fdcl-hdf5.git
-    GIT_TAG         master
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG        release-1.8.0
 )
-FetchContent_MakeAvailable(fdcl_hdf5)
+FetchContent_GetProperties(googletest)
+if(NOT googletest_POPULATED)
+    FetchContent_Populate(googletest)
+    add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
+endif()
 
 
-## Make Sklearn library
+#################### Make Sklearn library ####################
 add_library(sklearn 
                 src/model_selection.cpp
                 src/KNeighborsClassifier.cpp
@@ -45,6 +56,16 @@ target_link_libraries(sklearn PUBLIC Eigen3::Eigen)
 target_compile_features(sklearn PUBLIC cxx_std_17)
 
 
-## Make main executable
+#################### Make main executable ####################
 add_executable(main_test main.cpp)
-target_link_libraries(main_test PRIVATE Eigen3::Eigen sklearn fdcl_hdf5)
+target_link_libraries(main_test PRIVATE sklearn fdcl_hdf5)
+
+
+#################### Add Tests in ####################
+add_executable(tests
+                tests/test_all.cpp
+                tests/test_knn.cpp
+                tests/test_ms.cpp
+                tests/test_pipe.cpp)
+target_link_libraries(tests PRIVATE gtest fdcl_hdf5 sklearn)
+add_custom_target(test COMMAND tests)
