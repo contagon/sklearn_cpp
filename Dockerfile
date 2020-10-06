@@ -5,7 +5,7 @@ ENV TZ=America/Denver
 RUN apt-get -y update
 RUN apt-get -y upgrade
 RUN apt-get install -qy build-essential git cmake g++ libhdf5-serial-dev valgrind 
-RUN apt-get install -qy valgrind-dbg
+RUN apt-get install -qy glibc-source
 
 RUN git clone https://gitlab.com/libeigen/eigen.git
 RUN cd eigen && mkdir build && cd build && cmake .. && make install
