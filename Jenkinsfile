@@ -22,27 +22,29 @@ pipeline {
       }
     }
     stage('Valgrind') {
-      runValgrind (
-          childSilentAfterFork: true,
-          excludePattern: '',
-          generateSuppressions: true,
-          ignoreExitCode: true,
-          includePattern: 'build/tests',
-          outputDirectory: '',
-          outputFileEnding: '.memcheck',
-          programOptions: '',
-          removeOldReports: true,
-          suppressionFiles: '',
-          tool: [$class: 'ValgrindToolMemcheck',
-            leakCheckLevel: 'full',
-            showReachable: true,
-            trackOrigins: true,
-            undefinedValueErrors: true],
-          traceChildren: true,
-          valgrindExecutable: '',
-          valgrindOptions: '',
-          workingDirectory: ''
-        )
+      steps{
+        runValgrind (
+            childSilentAfterFork: true,
+            excludePattern: '',
+            generateSuppressions: true,
+            ignoreExitCode: true,
+            includePattern: 'build/tests',
+            outputDirectory: '',
+            outputFileEnding: '.memcheck',
+            programOptions: '',
+            removeOldReports: true,
+            suppressionFiles: '',
+            tool: [$class: 'ValgrindToolMemcheck',
+              leakCheckLevel: 'full',
+              showReachable: true,
+              trackOrigins: true,
+              undefinedValueErrors: true],
+            traceChildren: true,
+            valgrindExecutable: '',
+            valgrindOptions: '',
+            workingDirectory: ''
+          )
+      }
     }
   }
   post {
