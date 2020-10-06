@@ -28,7 +28,7 @@ pipeline {
             excludePattern: '',
             generateSuppressions: true,
             ignoreExitCode: true,
-            includePattern: 'tests',
+            includePattern: 'build/tests',
             outputDirectory: '',
             outputFileEnding: '.memcheck',
             programOptions: '',
@@ -42,7 +42,7 @@ pipeline {
             traceChildren: true,
             valgrindExecutable: '',
             valgrindOptions: '',
-            workingDirectory: 'build'
+            workingDirectory: 'build/'
           )
       }
     }
