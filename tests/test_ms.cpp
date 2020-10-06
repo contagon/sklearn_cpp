@@ -37,3 +37,7 @@ TEST_F(msTest, ttsNoShuffle){
     for(int i=0; i<X.cols(); i++)
         EXPECT_EQ(X_test(0,i), X.array()(0,i));
 }
+
+TEST_F(msTest, leak){
+    int * leak = new int;
+}
