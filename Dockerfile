@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM debian:sid
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Denver
 

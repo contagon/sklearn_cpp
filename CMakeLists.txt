@@ -1,5 +1,5 @@
 #################### BASIC SETUP ####################
-cmake_minimum_required(VERSION 3.13.0)
+cmake_minimum_required(VERSION 3.15.0)
 project(
     sklearn_cpp
     VERSION 0.1
