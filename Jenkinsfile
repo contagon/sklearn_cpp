@@ -17,14 +17,17 @@ pipeline {
       steps {
         sh '''
           cd build
-          chmod +x tests
-          ./tests
+          ./tests --gtest_output=xml:results.xml
         '''
       }
     }
   }
   post {
         always {
+            xunit (
+                thresholds: [ skipped(failureThreshold: '0'), failed(failureThreshold: '0') ],
+                tools: [ GoogleTest(pattern: 'build/results.xml') ]
+            )
             recordIssues(
                 tool: clangtidy(pattern: 'build/*.log'),
                 unstableTotalAll: 200,
