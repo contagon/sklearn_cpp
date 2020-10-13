@@ -29,10 +29,11 @@ pipeline {
                 tools: [ GoogleTest(pattern: 'build/results.xml') ]
             )
             recordIssues(
-                tool: clangtidy(pattern: 'build/*.log'),
+                tool: clangTidy(pattern: 'build/*.log'),
                 unstableTotalAll: 200,
                 failedTotalAll: 220
             )
+            sh 'rm -rf build'
         }
     }
 }
