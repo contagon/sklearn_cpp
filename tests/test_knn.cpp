@@ -1,25 +1,25 @@
-#include "gtest/gtest.h"
-#include "hdf5.hpp"
 #include "KNeighborsClassifier.h"
+#include "hdf5.hpp"
+#include "gtest/gtest.h"
 
 class knnTest : public ::testing::Test {
-    protected:
-        virtual void SetUp() {
-            // Load Data
-            HDF5::File hf = HDF5::File("../data/iris.h5", HDF5::File::ReadOnly);
-            hf.read("X", X);
-            hf.read("y", y);
-        }
+protected:
+  virtual void SetUp() {
+    // Load Data
+    HDF5::File hf = HDF5::File("../data/iris.h5", HDF5::File::ReadOnly);
+    hf.read("X", X);
+    hf.read("y", y);
+  }
 
-        KNeighborsClassifier knn = KNeighborsClassifier(10, "uniform");
-        Eigen::MatrixXd X;
-        Eigen::VectorXd y;
+  KNeighborsClassifier knn = KNeighborsClassifier(10, "uniform");
+  Eigen::MatrixXd X;
+  Eigen::VectorXd y;
 };
 
-TEST_F(knnTest, Fitting){
-    knn.fit(X, y);
-    EXPECT_TRUE(knn.is_fitted());
-    EXPECT_EQ(knn.n_features(), X.cols());
+TEST_F(knnTest, Fitting) {
+  knn.fit(X, y);
+  EXPECT_TRUE(knn.is_fitted());
+  EXPECT_EQ(knn.n_features(), X.cols());
 }
 
 // TEST(knnTest, NArgmax){

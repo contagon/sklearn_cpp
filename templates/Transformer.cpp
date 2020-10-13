@@ -8,18 +8,19 @@ Transfomer::Transfomer(int fake_param)
         // But we make a reference to it to make syntax easier throughout our class
 
 void Transfomer::fit(ArrayXXd X){
-    // Make sure everything is in order
-    check_X_y(X);
+  // Make sure everything is in order
+  check_X_y(X);
 } 
 
 void Transfomer::transform_inplace(ArrayXXd& X){
-    // Check to make sure everything is in order
-    check_is_fitted();
-    check_X(X);
+  // Check to make sure everything is in order
+  check_is_fitted();
+  check_X(X);
 }
 
 void Transfomer::inverse_transform_inplace(ArrayXXd& X){
-    // Check to make sure everything is in order
-    check_is_fitted();
-    check_X(X); // May need to remove this if doing some sort of dimension reduction
+  // Check to make sure everything is in order
+  check_is_fitted();
+  check_X(
+      X); // May need to remove this if doing some sort of dimension reduction
 }

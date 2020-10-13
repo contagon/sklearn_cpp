@@ -6,8 +6,7 @@ project(
     LANGUAGES CXX)
 
 include(FetchContent)
-
-
+set(CMAKE_CXX_CLANG_TIDY "")
 #################### Load libraries ####################
 #eigen 3
 FetchContent_Declare(
@@ -32,7 +31,6 @@ if(NOT googletest_POPULATED)
     add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
 endif()
 
-
 #################### Make Sklearn library ####################
 add_library(sklearn 
                 src/model_selection.cpp
@@ -55,6 +53,7 @@ target_include_directories(sklearn PUBLIC include)
 target_link_libraries(sklearn PUBLIC Eigen3::Eigen)
 target_compile_features(sklearn PUBLIC cxx_std_17)
 
+set_target_properties(sklearn PROPERTIES CXX_CLANG_TIDY "clang-tidy;-checks=-*,cppcoreguidelines-*")
 
 #################### Make main executable ####################
 add_executable(main_test main.cpp)

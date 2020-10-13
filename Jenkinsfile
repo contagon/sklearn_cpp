@@ -9,7 +9,7 @@ pipeline {
           cd ..
           mkdir build && cd build
           cmake ..
-          make
+          make 2> clangtidy.log
         '''
       }
     }
@@ -22,6 +22,15 @@ pipeline {
         '''
       }
     }
-
   }
+  post {
+        always {
+            recordIssues(
+                tool: clangtidy(pattern: 'build/*.log'),
+                unstableTotalAll: 200,
+                failedTotalAll: 220
+            )
+        }
+    }
+}
 }
