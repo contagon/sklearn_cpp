@@ -1,4 +1,4 @@
-#include "RadiusNeighborsClassifier.h"
+#include "sklearn/RadiusNeighborsClassifier.h"
 
 // Default Constructor
 RadiusNeighborsClassifier::RadiusNeighborsClassifier(float radius, string weights) 

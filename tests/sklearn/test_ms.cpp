@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "model_selection.h"
+#include "sklearn/model_selection.h"
 #include "hdf5.hpp"
 
 class msTest : public ::testing::Test {

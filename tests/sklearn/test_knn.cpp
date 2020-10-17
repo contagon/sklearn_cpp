@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "hdf5.hpp"
-#include "KNeighborsClassifier.h"
+#include "sklearn/KNeighborsClassifier.h"
 
 class knnTest : public ::testing::Test {
     protected:

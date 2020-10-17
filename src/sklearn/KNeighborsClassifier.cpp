@@ -1,4 +1,4 @@
-#include "KNeighborsClassifier.h"
+#include "sklearn/KNeighborsClassifier.h"
 
 ArrayXi n_argmax(ArrayXd& array, const int& N){
     // make array of indices

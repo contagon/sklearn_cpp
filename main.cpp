@@ -2,17 +2,17 @@
 #include "hdf5.hpp"
 #include <Eigen/Dense>
 #include <iostream>  
-#include "base.h"
+#include "sklearn/base.h"
 
-#include "KNeighborsClassifier.h"
-#include "RadiusNeighborsClassifier.h"
+#include "sklearn/KNeighborsClassifier.h"
+#include "sklearn/RadiusNeighborsClassifier.h"
 
-#include "PCA.h"
-#include "StandardScaler.h"
-#include "MinMaxScaler.h"
+#include "sklearn/PCA.h"
+#include "sklearn/StandardScaler.h"
+#include "sklearn/MinMaxScaler.h"
 
-#include "model_selection.h"
-#include "Pipeline.h"
+#include "sklearn/model_selection.h"
+#include "sklearn/Pipeline.h"
 
 #include <vector>
 #include <map>
@@ -36,7 +36,7 @@ int main()
 
     //  """ Pipeline Testing """
     //  Can't do subpipe like this, no way to properly delete pointer
-    // Pipeline pipe1 = Pipeline({{"pca", new PCA(2)}});
+    Pipeline pipe1 = Pipeline({{"pca", new PCA(2)}});
     // Pipeline pipe({  {"pipe", &pipe1 },
                 //  {"knn", new KNeighborsClassifier(5)}});
     

@@ -1,4 +1,4 @@
-#include "model_selection.h"
+#include "sklearn/model_selection.h"
 
 Split test_train_split(const ArrayXXd& X, const ArrayXd& y, float test_size, bool shuffle){
     // get number of items in test set

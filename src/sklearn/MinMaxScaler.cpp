@@ -1,4 +1,4 @@
-#include "MinMaxScaler.h"
+#include "sklearn/MinMaxScaler.h"
 
 // Default Constructor
 MinMaxScaler::MinMaxScaler(float feature_min, float feature_max) 

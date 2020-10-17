@@ -1,6 +1,6 @@
-set(tests test_all.cpp)
+set(tests "test_knn.cpp;test_ms.cpp;test_pipe.cpp;")
 
-set(DEPENDENT_LIBRARIES sklearn)
+set(DEPENDENT_LIBRARIES sklearn Eigen3::Eigen fdcl_hdf5)
 set(GMOCK_LIBRARIES gmock gtest gtest_main)
 
 

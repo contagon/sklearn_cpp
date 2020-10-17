@@ -1,10 +1,10 @@
 #include "gtest/gtest.h"
 #include "hdf5.hpp"
-#include "Pipeline.h"
+#include "sklearn/Pipeline.h"
 
-#include "StandardScaler.h"
-#include "PCA.h"
-#include "KNeighborsClassifier.h"
+#include "sklearn/StandardScaler.h"
+#include "sklearn/PCA.h"
+#include "sklearn/KNeighborsClassifier.h"
 
 class pipeTest : public ::testing::Test {
     protected:

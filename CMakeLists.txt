@@ -64,5 +64,5 @@ pods2_install_project_includes()
 pods2_install_project_targets()
 
 #################### Make main executable ####################
-# add_executable(main_test main.cpp)
-# target_link_libraries(main_test PRIVATE sklearn fdcl_hdf5)
+add_executable(main_test main.cpp)
+target_link_libraries(main_test PRIVATE sklearn fdcl_hdf5)
