@@ -39,7 +39,7 @@ pods2_initialize_project(${PROJECT_NAME})
 
 FetchContent_Declare(
     Eigen3
-    GIT_REPOSITORY  https://gitlab.com/libeigen/eigen.git
+    GIT_REPOSITORY  git@bitbucket.org:contagon/eigen3-new-pod2.git
     GIT_TAG         master
 )
 FetchContent_MakeAvailable(Eigen3)
