@@ -6,7 +6,7 @@ class msTest : public ::testing::Test {
     protected:
         virtual void SetUp() {
             // Load Data
-            HDF5::File hf = HDF5::File("../../../data/iris.h5", HDF5::File::ReadOnly);
+            HDF5::File hf = HDF5::File("../../../python/data/iris.h5", HDF5::File::ReadOnly);
             hf.read("X", X);
             hf.read("y", y);
         }

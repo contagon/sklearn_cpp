@@ -39,7 +39,7 @@ configure:
 
 	# run CMake to generate and configure the build scripts
 	@cd pod-build && cmake -DCMAKE_INSTALL_PREFIX=$(BUILD_PREFIX) \
-		   -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ..
+		   -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DTIDY=${TIDY} ..
 
 clean-all:
 	-if [ -e pod-build/install_manifest.txt ]; then rm -f `cat pod-build/install_manifest.txt`; fi
@@ -49,6 +49,29 @@ clean:
 	-if [ -e pod-build/install_manifest.txt ]; then rm -f `cat pod-build/install_manifest.txt`; fi
 	-if [ -d pod-build ]; then $(MAKE) -C pod-build clean; fi
 
+## USED TO CORRECT CODING STYLE OF CODE
+format-python:
+	@autopep8 --in-place -a -a -a --recursive ./python
+
+format-cpp:
+	@clang-format -i src/**/*.cpp include/**/*.h
+
+format:
+	$(MAKE) format-python
+	$(MAKE) format-cpp
+
+## USED TO CHECK CODING STYLE OF CODE
+test-format-python:
+	@pycodestyle
+
+test-format-cpp:
+	$(MAKE) configure TIDY=1
+
+test-format:
+	@pycodestyle
+	$(MAKE) test-format-python
+	$(MAKE) test-format-cpp
+	
 
 # other (custom) targets are passed through to the cmake-generated Makefile
 %::
