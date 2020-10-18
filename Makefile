@@ -54,7 +54,7 @@ format-python:
 	@autopep8 --in-place -a -a -a --recursive ./python
 
 format-cpp:
-	@clang-format -i src/**/*.cpp include/**/*.h
+	@clang-format -i src/**/* include/**/*
 
 format:
 	$(MAKE) format-python
@@ -62,13 +62,16 @@ format:
 
 ## USED TO CHECK CODING STYLE OF CODE
 test-format-python:
-	@pycodestyle
+	#this pipes to output if we set the output variable
+	@eval "pycodestyle ./python $${OUTPUT:+"> ${OUTPUT}"}" || exit 0 
 
 test-format-cpp:
+	$(MAKE) clean
 	$(MAKE) configure TIDY=1
+	#this pipes to output if we set the output variable
+	$(MAKE) $${OUTPUT:+"2> $${OUTPUT}"}
 
 test-format:
-	@pycodestyle
 	$(MAKE) test-format-python
 	$(MAKE) test-format-cpp
 	

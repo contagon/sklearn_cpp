@@ -22,8 +22,8 @@ endif()
   
 FetchContent_Declare(
   pods2
-  GIT_REPOSITORY git@bitbucket.org:frostlab/pods2.git
-  GIT_TAG origin/master
+  GIT_REPOSITORY git@bitbucket.org:contagon/pods2.git
+  GIT_TAG origin/clang-tidy
   UPDATE_DISCONNECTED true
   )
 FetchContent_MakeAvailable(pods2)
