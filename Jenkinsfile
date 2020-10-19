@@ -30,7 +30,7 @@ pipeline {
             excludePattern: '',
             generateSuppressions: true,
             ignoreExitCode: true,
-            includePattern: 'build/test/*',
+            includePattern: 'build/test/**/*',
             outputDirectory: '',
             outputFileEnding: '.memcheck',
             programOptions: '',
@@ -44,7 +44,7 @@ pipeline {
             traceChildren: true,
             valgrindExecutable: '',
             valgrindOptions: '',
-            workingDirectory: 'build/'
+            workingDirectory: 'build/test/**/'
           )
       }
     }
@@ -80,6 +80,7 @@ pipeline {
           unstableTotalAll: 200,
           failedTotalAll: 220
         )
+        // Load valgrind results
         publishValgrind (
             failBuildOnInvalidReports: false,
             failBuildOnMissingReports: false,
