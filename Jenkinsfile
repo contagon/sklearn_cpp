@@ -14,18 +14,18 @@ pipeline {
     stage('Test') {
       steps {
         sh 'make test-python OUTPUT=python_test.xml'
-        sh 'make test-cpp OUTPUT=cpp_test.xml'
-      }
-    }
-    stage('Format Test'){
-      steps {
-        sh 'make test-format-python OUTPUT=format_python.log'
-        sh 'make test-format-cpp OUTPUT=1'
+        sh 'make test-cpp OUTPUT=1'
       }
     }
     stage('Memory Check') {
       steps{
         sh 'make test-mem OUTPUT=1'
+      }
+    }
+    stage('Format Test'){
+      steps {
+        sh 'make test-format-python OUTPUT=format_python.log'
+        sh 'make test-format-cpp OUTPUT=format_cpp.log'
       }
     }
   }
