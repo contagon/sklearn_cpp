@@ -1,4 +1,4 @@
-FROM debian:sid-slim
+FROM debian:bullseye-slim
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Denver
 
