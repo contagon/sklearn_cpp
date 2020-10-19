@@ -22,7 +22,7 @@ endif()
   
 FetchContent_Declare(
   pods2
-  GIT_REPOSITORY git@bitbucket.org:contagon/pods2.git
+  GIT_REPOSITORY git@bitbucket.org:contagon/pods2-public.git
   GIT_TAG origin/clang-tidy
   UPDATE_DISCONNECTED true
   )
