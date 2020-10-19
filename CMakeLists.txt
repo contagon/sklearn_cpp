@@ -22,7 +22,7 @@ endif()
   
 FetchContent_Declare(
   pods2
-  GIT_REPOSITORY git@bitbucket.org:contagon/pods2-public.git
+  GIT_REPOSITORY https://contagon@bitbucket.org/contagon/pods2-public.git
   GIT_TAG origin/clang-tidy
   UPDATE_DISCONNECTED true
   )
@@ -39,7 +39,7 @@ pods2_initialize_project(${PROJECT_NAME})
 
 FetchContent_Declare(
     Eigen3
-    GIT_REPOSITORY  git@bitbucket.org:contagon/eigen3-new-pod2.git
+    GIT_REPOSITORY  https://contagon@bitbucket.org/contagon/eigen3-new-pod2.git
     GIT_TAG         master
 )
 FetchContent_MakeAvailable(Eigen3)
