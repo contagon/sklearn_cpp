@@ -1,10 +1,10 @@
-FROM debian:sid-slim
+FROM debian:buster-slim
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Denver
 
 RUN apt-get -y update
 RUN apt-get -y upgrade
-RUN apt-get install -qy build-essential git cmake g++ libhdf5-serial-dev cmake python3 python3-pip clang-tidy
+RUN apt-get install -qy build-essential git cmake g++ libhdf5-serial-dev python3 python3-pip
 
 RUN git clone https://gitlab.com/libeigen/eigen.git
 RUN cd eigen && mkdir build && cd build && cmake .. && make install
