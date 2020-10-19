@@ -82,7 +82,7 @@ test-python:
 
 test-cpp:
 	#this pipes to output if we set the output variable
-	$(MAKE) test -C pod-build $${OUTPUT:+"ARGS=\"-T Test --no-compress-output\""}
+	@eval "$(MAKE) test -C pod-build $${OUTPUT:+"ARGS=\"-T Test --no-compress-output\""}"
 
 test:
 	$(MAKE) test-python

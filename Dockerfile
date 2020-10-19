@@ -4,7 +4,7 @@ ENV TZ=America/Denver
 
 RUN apt-get -y update
 RUN apt-get -y upgrade
-RUN apt-get install -qy build-essential git cmake g++ libhdf5-serial-dev cmake python3 python3-pip
+RUN apt-get install -qy build-essential git cmake g++ libhdf5-serial-dev cmake python3 python3-pip clang-tidy
 
 RUN git clone https://gitlab.com/libeigen/eigen.git
 RUN cd eigen && mkdir build && cd build && cmake .. && make install
@@ -15,4 +15,4 @@ ENV CPATH="/usr/include/hdf5/serial/:${CPATH}"
 
 RUN pip3 install scikit-learn h5py pytest pycodestyle
 
-CMD /bin/bash
+CMD /bin/bash   
