@@ -4,7 +4,7 @@ ENV TZ=America/Denver
 
 RUN apt-get -y update
 RUN apt-get -y upgrade
-RUN apt-get install -qy build-essential git cmake g++ libhdf5-serial-dev python3 python3-pip clang-tidy
+RUN apt-get install -qy build-essential git cmake g++ libhdf5-serial-dev python3 python3-pip clang-tidy valgrind
 
 RUN git clone https://gitlab.com/libeigen/eigen.git
 RUN cd eigen && mkdir build && cd build && cmake .. && make install
