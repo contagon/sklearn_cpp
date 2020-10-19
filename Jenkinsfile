@@ -20,32 +20,12 @@ pipeline {
     stage('Format Test'){
       steps {
         sh 'make test-format-python OUTPUT=format_python.log'
-        sh 'make test-format-cpp OUTPUT=format_cpp.log'
+        sh 'make test-format-cpp OUTPUT=1'
       }
     }
     stage('Memory Check') {
       steps{
-        runValgrind (
-            childSilentAfterFork: true,
-            excludePattern: '',
-            generateSuppressions: true,
-            ignoreExitCode: true,
-            includePattern: 'build/test/**/*',
-            outputDirectory: '',
-            outputFileEnding: '.memcheck',
-            programOptions: '',
-            removeOldReports: true,
-            suppressionFiles: '',
-            tool: [$class: 'ValgrindToolMemcheck',
-              leakCheckLevel: 'full',
-              showReachable: true,
-              trackOrigins: true,
-              undefinedValueErrors: true],
-            traceChildren: true,
-            valgrindExecutable: '',
-            valgrindOptions: '',
-            workingDirectory: 'build/test/**/'
-          )
+        sh 'make test-mem OUTPUT=1'
       }
     }
   }
