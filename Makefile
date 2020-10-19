@@ -74,6 +74,19 @@ test-format-cpp:
 test-format:
 	$(MAKE) test-format-python
 	$(MAKE) test-format-cpp
+
+## USED TO RUN TESTS
+test-python:
+	#this pipes to output if we set the output variable
+	@eval "py.test  ./python $${OUTPUT:+"--junitxml ${OUTPUT}"}"
+
+test-cpp:
+	#this pipes to output if we set the output variable
+	$(MAKE) test -C pod-build $${OUTPUT:+"ARGS=\"-T Test --no-compress-output\""}
+
+test:
+	$(MAKE) test-python
+	$(MAKE) test-cpp
 	
 
 # other (custom) targets are passed through to the cmake-generated Makefile

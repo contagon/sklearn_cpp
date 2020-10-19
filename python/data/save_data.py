@@ -1,7 +1,5 @@
 from sklearn import datasets
 import h5py
-
-
 def save_data(data_function, filename):
     # load data
     data = data_function()
