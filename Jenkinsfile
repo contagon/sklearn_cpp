@@ -19,10 +19,7 @@ pipeline {
     }
     stage('Memory Check') {
       steps{
-        sh '''
-            cd build/test/sklearn_cpp/
-            ./sklearn_cpp_test-knn
-            '''
+        sh 'make test-cpp OUTPUT=1'
         sh 'make test-mem OUTPUT=1'
       }
     }
