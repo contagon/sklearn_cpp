@@ -45,15 +45,9 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Eigen3)
 
 #package for reading/writing h5 files
-# set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
-  # ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-# find_package(FDCL_HDF5 REQUIRED)
-FetchContent_Declare(
-    fdcl_hdf5
-    GIT_REPOSITORY  https://github.com/skulumani/fdcl-hdf5.git
-    GIT_TAG         master
-)
-FetchContent_MakeAvailable(fdcl_hdf5)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
+  ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+find_package(FDCL_HDF5 REQUIRED)
 
 ###############################################################################
 # Add subdirectories to src/exe files
