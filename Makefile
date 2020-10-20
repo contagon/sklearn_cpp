@@ -90,16 +90,16 @@ test:
 
 ## USED TO CHECK FOR MEMORY LEAKS
 test-mem:
-	cd build/test; 									\
-	for dir in $$(find ! -path . -type d); 			\
-	do 												\
-		cd $${dir}; 								\
-		for file in $$(find ./ -type f); 			\
-		do 											\
+	cd pod-build/tests; 																				\
+	for dir in $$(find -maxdepth 1 ! \( -path . -o -name CMakeFiles \) -type d); 						\
+	do 																									\
+		cd $${dir}; 																					\
+		for file in $$(find ./ -maxdepth 1 ! \( -name "*.cmake" -o -name Makefile \) -type f); 			\
+		do 																								\
 			eval "valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes $${OUTPUT:+"--xml=yes --xml-file=$${file}.memcheck"} "$${file}""; \
-		done; 										\
-		cd ..; 										\
-	done; 											\
+		done; 																							\
+		cd ..; 																							\
+	done; 																								\
 	
 
 # other (custom) targets are passed through to the cmake-generated Makefile

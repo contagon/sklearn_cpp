@@ -19,7 +19,6 @@ pipeline {
     }
     stage('Memory Check') {
       steps{
-        sh 'make test-cpp OUTPUT=1'
         sh 'make test-mem OUTPUT=1'
       }
     }
