@@ -67,7 +67,7 @@ pipeline {
             failThresholdDefinitelyLost: '',
             failThresholdInvalidReadWrite: '',
             failThresholdTotal: '',
-            pattern: '*.memcheck',
+            pattern: 'pod-build/tests/**/*.memcheck',
             publishResultsForAbortedBuilds: false,
             publishResultsForFailedBuilds: false,
             sourceSubstitutionPaths: '',
