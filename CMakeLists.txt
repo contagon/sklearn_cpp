@@ -53,6 +53,7 @@ FetchContent_Declare(
     GIT_REPOSITORY  https://github.com/skulumani/fdcl-hdf5.git
     GIT_TAG         master
 )
+FetchContent_MakeAvailable(fdcl_hdf5)
 
 ###############################################################################
 # Add subdirectories to src/exe files
